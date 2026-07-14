@@ -40,11 +40,22 @@ export interface InstitutionalImage {
   notes?: string
 }
 
+const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, "")}`
+
+const publicSrcSet = (value: string) =>
+  value
+    .split(",")
+    .map((entry) => {
+      const [path, descriptor] = entry.trim().split(/\s+/, 2)
+      return [publicAsset(path), descriptor].filter(Boolean).join(" ")
+    })
+    .join(", ")
+
 export const homeImages = {
   hero: {
-    src: "/images/hero-reciclagem.jpg",
+    src: publicAsset("/images/hero-reciclagem.jpg"),
     alt: "Equipe atuando em operação de reciclagem e triagem de resíduos.",
-    srcSet: "/images/hero-reciclagem-mobile.jpg 1200w, /images/hero-reciclagem.jpg 2200w",
+    srcSet: publicSrcSet("/images/hero-reciclagem-mobile.jpg 1200w, /images/hero-reciclagem.jpg 2200w"),
     sizes: "(max-width: 767px) calc(100vw - 40px), (max-width: 1023px) calc(100vw - 64px), 599px",
     objectPosition: "56% 50%",
     aspect: "5 / 4",
@@ -61,7 +72,7 @@ export const homeImages = {
     notes: "Imagem principal. Otimizada para reduzir peso sem alterar composição. Possui variante mobile de 1200x900 com 234.5 KB.",
   },
   aboutRobson: {
-    src: "/images/robson-borges-robinho-liberdade.jpg",
+    src: publicAsset("/images/robson-borges-robinho-liberdade.jpg"),
     alt: "Robson Borges, Robinho Liberdade, liderança da Eu Quero Liberdade.",
     objectPosition: "50% 38%",
     aspect: "4 / 3",
@@ -78,7 +89,7 @@ export const homeImages = {
     notes: "Foto humana central da narrativa. Manter foco em rosto e tronco.",
   },
   purpose: {
-    src: "/images/proposito-transformacao-residuos.jpg",
+    src: publicAsset("/images/proposito-transformacao-residuos.jpg"),
     alt: "Mão segurando material reciclável triturado em processo de transformação.",
     objectPosition: "56% 62%",
     aspect: "4 / 3",
@@ -95,7 +106,7 @@ export const homeImages = {
     notes: "Imagem vertical. Usar recorte com foco na mão e material reciclável.",
   },
   process: {
-    src: "/images/processo-triagem-residuos.jpg",
+    src: publicAsset("/images/processo-triagem-residuos.jpg"),
     alt: "Trabalho de separação e triagem de resíduos recicláveis.",
     objectPosition: "50% 48%",
     aspect: "4 / 3",
@@ -112,7 +123,7 @@ export const homeImages = {
     notes: "Baixa resolução para áreas muito grandes. Usar com cautela.",
   },
   impact: {
-    src: "/images/impacto-trabalho-reciclagem.jpg",
+    src: publicAsset("/images/impacto-trabalho-reciclagem.jpg"),
     alt: "Trabalhadora em operação de reciclagem com vidro e materiais reaproveitáveis.",
     objectPosition: "70% 50%",
     aspect: "4 / 3",
@@ -129,7 +140,7 @@ export const homeImages = {
     notes: "Boa imagem humana-operacional. Manter foco na trabalhadora.",
   },
   manifesto: {
-    src: "/images/manifesto-logistica-reversa.jpg",
+    src: publicAsset("/images/manifesto-logistica-reversa.jpg"),
     alt: "Garrafas plásticas descartadas representando logística reversa e economia circular.",
     objectPosition: "50% 50%",
     aspect: "4 / 3",
@@ -146,7 +157,7 @@ export const homeImages = {
     notes: "Imagem em preto e branco com tom de manifesto. Não usar como prova de projeto executado.",
   },
   territory: {
-    src: "/images/territorio-comunidade.jpg",
+    src: publicAsset("/images/territorio-comunidade.jpg"),
     alt: "Espaço comunitário colorido representando território, convivência e transformação social.",
     objectPosition: "50% 42%",
     aspect: "4 / 3",
@@ -163,7 +174,7 @@ export const homeImages = {
     notes: "Imagem territorial forte, mas pode remeter a projeto cultural. Validar aderência com Robson.",
   },
   solutionEvents: {
-    src: "/images/solucao-eventos-sustentaveis.jpg",
+    src: publicAsset("/images/solucao-eventos-sustentaveis.jpg"),
     alt: "Profissional de limpeza atuando em área de evento com resíduos espalhados no gramado.",
     objectPosition: "36% 55%",
     aspect: "4 / 3",
@@ -180,7 +191,7 @@ export const homeImages = {
     notes: "Imagem principal para solução de eventos sustentáveis. Não associar a evento executado sem validação.",
   },
   solutionCollection: {
-    src: "/images/solucao-coleta-logistica.jpg",
+    src: publicAsset("/images/solucao-coleta-logistica.jpg"),
     alt: "Trabalhadores carregando grande volume de garrafas plásticas para coleta e transporte.",
     objectPosition: "52% 62%",
     aspect: "4 / 3",
@@ -197,7 +208,7 @@ export const homeImages = {
     notes: "Imagem forte para coleta e logística. Usar com recorte menor se também for usada futuramente no Hero.",
   },
   solutionSorting: {
-    src: "/images/solucao-triagem-residuos.jpg",
+    src: publicAsset("/images/solucao-triagem-residuos.jpg"),
     alt: "Trabalhadores em linha de triagem separando resíduos recicláveis.",
     objectPosition: "50% 50%",
     aspect: "4 / 3",
@@ -214,7 +225,7 @@ export const homeImages = {
     notes: "Boa leitura operacional para triagem. Usar em área pequena ou média.",
   },
   solutionEducation: {
-    src: "/images/solucao-educacao-ambiental.jpg",
+    src: publicAsset("/images/solucao-educacao-ambiental.jpg"),
     alt: "Crianças participando de atividade prática de educação ambiental e plantio.",
     objectPosition: "50% 52%",
     aspect: "4 / 3",
@@ -231,7 +242,7 @@ export const homeImages = {
     notes: "Imagem principal para educação ambiental por mostrar atividade prática e coletiva.",
   },
   solutionConsulting: {
-    src: "/images/solucao-consultoria-formacao.jpg",
+    src: publicAsset("/images/solucao-consultoria-formacao.jpg"),
     alt: "Palestra com público em auditório representando formação e consultoria socioambiental.",
     objectPosition: "50% 46%",
     aspect: "4 / 3",
@@ -248,7 +259,7 @@ export const homeImages = {
     notes: "Usar apenas para consultoria, formação ou mobilização institucional.",
   },
   projectCommunityReuse: {
-    src: "/images/projeto-comunidade-reuso.jpg",
+    src: publicAsset("/images/projeto-comunidade-reuso.jpg"),
     alt: "Pessoas em oficina comunitária pintando pneus para reaproveitamento em espaço coletivo.",
     objectPosition: "55% 58%",
     aspect: "4 / 3",
@@ -265,7 +276,7 @@ export const homeImages = {
     notes: "Representa projeto comunitário e reaproveitamento. Tratar como ilustrativa até haver acervo próprio.",
   },
   projectEducationWorkshop: {
-    src: "/images/projeto-educacao-ambiental.jpg",
+    src: publicAsset("/images/projeto-educacao-ambiental.jpg"),
     alt: "Crianças participando de oficina de reciclagem com materiais reaproveitáveis.",
     objectPosition: "48% 50%",
     aspect: "4 / 3",
@@ -282,7 +293,7 @@ export const homeImages = {
     notes: "Alternativa para projeto educacional quando a imagem de educação já estiver em Soluções.",
   },
   projectSustainableEvent: {
-    src: "/images/projeto-evento-sustentavel.jpg",
+    src: publicAsset("/images/projeto-evento-sustentavel.jpg"),
     alt: "Tambores de coleta seletiva em evento com sinalização de recicláveis e orgânicos.",
     objectPosition: "50% 48%",
     aspect: "4 / 3",
@@ -299,7 +310,7 @@ export const homeImages = {
     notes: "Usar com cautela por marcas de terceiros visíveis. Não apresentar como registro proprietário.",
   },
   projectTerritoryCommunity: {
-    src: "/images/projeto-territorio-comunidade.jpg",
+    src: publicAsset("/images/projeto-territorio-comunidade.jpg"),
     alt: "Vista de comunidade urbana em morro com quadra e moradias.",
     objectPosition: "50% 48%",
     aspect: "4 / 3",
@@ -316,7 +327,7 @@ export const homeImages = {
     notes: "Representa contexto territorial. Não tratar como projeto específico sem comprovação.",
   },
   problemUrbanWaste: {
-    src: "/images/problema-residuo-urbano.jpg",
+    src: publicAsset("/images/problema-residuo-urbano.jpg"),
     alt: "Resíduos acumulados em área urbana representando descarte irregular.",
     objectPosition: "52% 58%",
     aspect: "4 / 3",
@@ -333,7 +344,7 @@ export const homeImages = {
     notes: "Imagem negativa mais moderada para representar ponto de partida do problema. Evitar uso dominante.",
   },
   reservePurposeRegeneration: {
-    src: "/images/reserva-proposito-regeneracao.jpg",
+    src: publicAsset("/images/reserva-proposito-regeneracao.jpg"),
     alt: "Pessoa segurando uma muda de planta nas mãos.",
     objectPosition: "50% 50%",
     aspect: "4 / 3",
@@ -350,7 +361,7 @@ export const homeImages = {
     notes: "Reserva simbólica para propósito. Não usar como prova operacional.",
   },
   reserveImpactCooperativeWork: {
-    src: "/images/reserva-impacto-trabalho-cooperativo.jpg",
+    src: publicAsset("/images/reserva-impacto-trabalho-cooperativo.jpg"),
     alt: "Trabalhadora sorrindo durante separação de materiais recicláveis.",
     objectPosition: "58% 50%",
     aspect: "4 / 3",
@@ -367,7 +378,7 @@ export const homeImages = {
     notes: "Imagem humana forte para impacto social. Não associar a números ou depoimentos específicos.",
   },
   reserveImpactRecyclingAgent: {
-    src: "/images/reserva-impacto-agente-reciclagem.jpg",
+    src: publicAsset("/images/reserva-impacto-agente-reciclagem.jpg"),
     alt: "Agente de reciclagem manuseando sacos com garrafas plásticas.",
     objectPosition: "47% 56%",
     aspect: "4 / 3",
