@@ -29,6 +29,7 @@ A API sobe localmente em `http://127.0.0.1:5000`.
 
 - `GET /api/v1/health`
 - `GET /api/v1/health/db`
+- `GET /api/v1/auth/me`
 
 ## Testes
 
@@ -37,8 +38,19 @@ cd backend
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
+## Admin
+
+Criar o primeiro administrador:
+
+```powershell
+cd backend
+.\.venv\Scripts\python.exe -m flask --app run.py create-admin
+```
+
 ## Configuração
 
 - `DATABASE_URL`: usa SQLite local em `backend/instance/app.sqlite3` quando vazio.
 - `DATABASE_URL=postgresql://...`: suportado para o ambiente futuro de produção via `psycopg`.
 - `CORS_ORIGINS`: lista separada por vírgula com as origens permitidas para `/api/*`.
+- `SECRET_KEY`: obrigatória em produção. Em desenvolvimento existe apenas fallback local inseguro.
+- Cookies de sessão: `HttpOnly=True`, `SameSite=Lax` por padrão e `Secure=True` em produção.

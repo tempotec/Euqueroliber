@@ -2,8 +2,10 @@ from pathlib import Path
 
 from flask import Flask
 
+from .cli import register_commands
 from .config import Config
 from .extensions import cors, db, migrate
+from . import models
 from .routes import api_v1_bp
 
 
@@ -23,9 +25,11 @@ def create_app(config_overrides: dict | None = None) -> Flask:
         resources={
             r"/api/*": {
                 "origins": app.config["CORS_ORIGINS"],
+                "supports_credentials": True,
             }
         },
     )
     app.register_blueprint(api_v1_bp)
+    register_commands(app)
 
     return app
