@@ -1,4 +1,5 @@
 import { ChevronDown } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { homeImages } from '../../content/homeImages'
 import { siteContent } from '../../content/site'
 import { InstitutionalImage } from '../ui/InstitutionalImage'
@@ -19,18 +20,18 @@ export function Hero() {
             {siteContent.hero.subtitle}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a
-              href={siteContent.hero.ctas[0].href}
+            <Link
+              to="/quem-somos"
               className="inline-flex items-center justify-center rounded-lg bg-[#F2B705] px-5 py-3 text-sm font-semibold text-[#111827] shadow-[0_14px_26px_-18px_rgba(0,0,0,0.9)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#D97706] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F2B705]"
             >
               {siteContent.hero.ctas[0].label}
-            </a>
-            <a
-              href={siteContent.hero.ctas[1].href}
+            </Link>
+            <Link
+              to="/contato"
               className="inline-flex items-center justify-center rounded-lg border border-[#F7F3E8]/35 bg-white/10 px-5 py-3 text-sm font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-[#F2B705] hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F2B705]"
             >
               {siteContent.hero.ctas[1].label}
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -41,10 +42,10 @@ export function Hero() {
         />
       </div>
 
-      <a href="#quem-somos" className="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#F7F3E8]/75 transition hover:text-[#F2B705]">
+      <Link to="/quem-somos" className="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#F7F3E8]/75 transition hover:text-[#F2B705]">
         Continue
         <ChevronDown size={14} />
-      </a>
+      </Link>
     </section>
   )
 }
