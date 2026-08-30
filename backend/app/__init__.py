@@ -1,0 +1,31 @@
+from pathlib import Path
+
+from flask import Flask
+
+from .config import Config
+from .extensions import cors, db, migrate
+from .routes import api_v1_bp
+
+
+def create_app(config_overrides: dict | None = None) -> Flask:
+    app = Flask(__name__, instance_relative_config=True)
+    app.config.from_object(Config)
+
+    if config_overrides:
+        app.config.update(config_overrides)
+
+    Path(app.instance_path).mkdir(parents=True, exist_ok=True)
+
+    db.init_app(app)
+    migrate.init_app(app, db)
+    cors.init_app(
+        app,
+        resources={
+            r"/api/*": {
+                "origins": app.config["CORS_ORIGINS"],
+            }
+        },
+    )
+    app.register_blueprint(api_v1_bp)
+
+    return app
