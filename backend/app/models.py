@@ -149,3 +149,45 @@ class Publication(db.Model):
             value = value.replace(tzinfo=UTC)
 
         return value.astimezone(UTC).isoformat()
+
+
+class ContactMessage(db.Model):
+    __tablename__ = "contact_messages"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(254), nullable=False)
+    organization = db.Column(db.String(180), nullable=True)
+    phone = db.Column(db.String(40), nullable=True)
+    subject = db.Column(db.String(160), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    created_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=False,
+        default=utc_now,
+    )
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    @staticmethod
+    def serialize_datetime(value: datetime | None) -> str | None:
+        if value is None:
+            return None
+
+        if value.tzinfo is None:
+            value = value.replace(tzinfo=UTC)
+
+        return value.astimezone(UTC).isoformat()
+
+    def to_dict(self) -> dict[str, int | str | None]:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+            "organization": self.organization,
+            "phone": self.phone,
+            "subject": self.subject,
+            "message": self.message,
+            "created_at": self.serialize_datetime(self.created_at),
+        }

@@ -183,3 +183,20 @@ export async function getPublicPublication(slug: string) {
     method: 'GET',
   })
 }
+
+export type ContactPayload = {
+  name: string
+  email: string
+  organization?: string
+  phone?: string
+  subject: string
+  message: string
+  website?: string
+}
+
+export async function sendContactMessage(data: ContactPayload) {
+  return apiRequest<{ sent: boolean; message: string }>('/api/v1/contact', {
+    method: 'POST',
+    body: data,
+  })
+}

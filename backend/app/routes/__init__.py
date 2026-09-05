@@ -2,4 +2,4 @@ from flask import Blueprint
 
 api_v1_bp = Blueprint("api_v1", __name__, url_prefix="/api/v1")
 
-from . import admin, admin_publications, auth, health, publications  # noqa: E402,F401
+from . import admin, admin_publications, auth, contact, health, publications  # noqa: E402,F401
