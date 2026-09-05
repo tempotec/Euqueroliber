@@ -1,4 +1,5 @@
-import { HashRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
+import { HashRouter, Link, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './auth/AuthProvider'
 import { ProtectedRoute } from './auth/ProtectedRoute'
 import { Footer } from './components/layout/Footer'
@@ -26,7 +27,41 @@ function HomePage() {
 }
 
 function QuemSomosPage() {
-  return <><QuemSomos /><Proposito /><Diferenciais /></>
+  return (
+    <>
+      <QuemSomos />
+      <Proposito />
+      <Diferenciais />
+      <Section id="quem-somos-cta" className="bg-[#FBF8EF]">
+        <div className="flex flex-col items-start gap-5 rounded-lg border border-[#F2B705]/40 bg-gradient-to-br from-white to-[#FBF8EF] p-6 shadow-sm md:flex-row md:items-center md:justify-between md:p-8">
+          <div>
+            <h2 className="text-2xl font-bold leading-tight text-[#14532D] md:text-3xl">
+              Conheça nossas soluções
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#374151] md:text-base">
+              Da gestão de resíduos à inclusão produtiva, veja como transformamos desafios em oportunidades.
+            </p>
+          </div>
+
+          <div className="flex shrink-0 flex-wrap items-center gap-3">
+            <Link
+              to="/solucoes"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#14532D] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#166534]"
+            >
+              Conheça nossas soluções
+              <ArrowRight size={16} />
+            </Link>
+            <Link
+              to="/contato"
+              className="inline-flex items-center gap-2 rounded-lg border border-[#14532D] px-5 py-3 text-sm font-semibold text-[#14532D] transition hover:bg-[#14532D] hover:text-white"
+            >
+              Fale com a gente
+            </Link>
+          </div>
+        </div>
+      </Section>
+    </>
+  )
 }
 
 function SolucoesPage() {
