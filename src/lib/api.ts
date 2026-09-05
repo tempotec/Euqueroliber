@@ -106,3 +106,80 @@ export async function fetchProtectedAdminSession() {
     method: 'GET',
   })
 }
+
+export type PublicationStatus = 'draft' | 'published'
+
+export type Publication = {
+  id: number
+  title: string
+  slug: string
+  summary: string
+  content: string
+  cover_image: string | null
+  status: PublicationStatus
+  published_at: string | null
+  created_at: string
+  updated_at: string
+}
+
+export type PublicPublication = {
+  id: number
+  title: string
+  slug: string
+  summary: string
+  cover_image: string | null
+  published_at: string | null
+}
+
+export type PublicationPayload = {
+  title: string
+  slug?: string
+  summary?: string
+  content: string
+  cover_image?: string
+  status?: PublicationStatus
+}
+
+export async function getAdminPublications() {
+  return apiRequest<{ items: Publication[] }>('/api/v1/admin/publications', {
+    method: 'GET',
+  })
+}
+
+export async function getAdminPublication(id: number | string) {
+  return apiRequest<Publication>(`/api/v1/admin/publications/${id}`, {
+    method: 'GET',
+  })
+}
+
+export async function createPublication(data: PublicationPayload) {
+  return apiRequest<Publication>('/api/v1/admin/publications', {
+    method: 'POST',
+    body: data,
+  })
+}
+
+export async function updatePublication(id: number | string, data: PublicationPayload) {
+  return apiRequest<Publication>(`/api/v1/admin/publications/${id}`, {
+    method: 'PUT',
+    body: data,
+  })
+}
+
+export async function deletePublication(id: number | string) {
+  return apiRequest<{ deleted: boolean }>(`/api/v1/admin/publications/${id}`, {
+    method: 'DELETE',
+  })
+}
+
+export async function getPublicPublications() {
+  return apiRequest<{ items: PublicPublication[] }>('/api/v1/publications', {
+    method: 'GET',
+  })
+}
+
+export async function getPublicPublication(slug: string) {
+  return apiRequest<Publication>(`/api/v1/publications/${slug}`, {
+    method: 'GET',
+  })
+}
