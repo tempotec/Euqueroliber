@@ -20,7 +20,7 @@ import { AdminPublicationFormPage } from './pages/AdminPublicationFormPage'
 import { AdminPublicationsPage } from './pages/AdminPublicationsPage'
 import { PublicacaoDetailPage } from './pages/PublicacaoDetailPage'
 import { PublicacoesPage } from './pages/PublicacoesPage'
-import { ProjetosTimeline } from './components/sections/ProjetosTimeline'
+import { ProjetosClientesPage } from './pages/ProjetosClientesPage'
 
 function HomePage() {
   return <Hero />
@@ -90,7 +90,7 @@ function AppRoutes() {
           <Route path="/quem-somos" element={<QuemSomosPage />} />
           <Route path="/solucoes" element={<SolucoesPage />} />
           <Route path="/impacto" element={<Impacto />} />
-          <Route path="/projetos-clientes" element={<ProjetosTimeline />} />
+          <Route path="/projetos-clientes" element={<ProjetosClientesPage />} />
           <Route path="/publicacoes" element={<PublicacoesPage />} />
           <Route path="/publicacoes/:slug" element={<PublicacaoDetailPage />} />
           <Route path="/contato" element={<Contato />} />

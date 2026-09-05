@@ -22,7 +22,7 @@ function ProjectCard({ projeto, index }: ProjectCardProps) {
       />
 
       <div className="min-h-[10.5rem] p-4 md:p-5">
-        <p className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-[#0F3A5F]">Marco {index + 1}</p>
+        <p className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-[#0F3A5F]">Projeto {index + 1}</p>
         <h3 className="mt-2 text-base font-bold leading-snug text-[#14532D] md:text-lg">{projeto.title}</h3>
         <p className="mt-2 text-sm leading-relaxed text-[#374151]">{projeto.description}</p>
       </div>
@@ -45,10 +45,10 @@ export function ProjetosTimeline() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="max-w-3xl">
           <h2 className="text-balance text-3xl font-semibold tracking-normal text-[#111827] md:text-4xl">
-            {'Frentes de Atua\u00e7\u00e3o'}
+            {'Projetos'}
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#374151] md:text-base">
-            {'\u00c1reas de trabalho que conectam reciclagem, educa\u00e7\u00e3o ambiental, mobiliza\u00e7\u00e3o territorial, eventos e fortalecimento de redes.'}
+            {'Frentes e experi\u00eancias de atua\u00e7\u00e3o que conectam reciclagem, educa\u00e7\u00e3o ambiental, mobiliza\u00e7\u00e3o territorial, eventos e fortalecimento de redes.'}
           </p>
         </div>
         <div className="flex gap-2">
