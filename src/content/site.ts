@@ -2,25 +2,15 @@ import { homeImages } from './homeImages'
 
 export const siteContent = {
   brand: 'Eu Quero Liberdade',
-  nav: [
-    { label: 'Quem Somos', href: '#quem-somos' },
-    { label: 'Solu\u00e7\u00f5es', href: '#solucoes' },
-    { label: 'Prop\u00f3sito', href: '#proposito' },
-    { label: 'Como Trabalhamos', href: '#como-trabalhamos' },
-    { label: 'Projetos e Trajet\u00f3ria', href: '#projetos' },
-    { label: 'Impacto', href: '#impacto' },
-    { label: 'Diferenciais', href: '#diferenciais' },
-    { label: 'Redes e Setores', href: '#parceiros' },
-    { label: 'Contato', href: '#contato' },
-  ],
+
   hero: {
     title: 'Transformamos res\u00edduos em dignidade, trabalho e liberdade.',
     image: homeImages.hero.src,
     subtitle:
       'Educa\u00e7\u00e3o ambiental, gest\u00e3o de res\u00edduos, log\u00edstica reversa e inclus\u00e3o socioprodutiva para comunidades, empresas, escolas, eventos e poder p\u00fablico.',
     ctas: [
-      { label: 'Conhe\u00e7a nossa hist\u00f3ria', href: '#quem-somos' },
-      { label: 'Fale com a gente', href: '#contato' },
+      { label: 'Conhe\u00e7a nossa hist\u00f3ria' },
+      { label: 'Fale com a gente' },
     ],
   },
   quemSomos: {
@@ -70,59 +60,14 @@ export const siteContent = {
       'A log\u00edstica reversa tamb\u00e9m pode ser humana: retorno \u00e0 cidadania, ao trabalho e ao pertencimento.',
     ],
   },
-  parceiros: {
-    title: 'Redes e setores de atua\u00e7\u00e3o',
-    itens: [
-      'Cooperativas e redes territoriais',
-      'Empresas com metas socioambientais',
-      'Escolas e universidades',
-      'Eventos e produtoras culturais',
-      'Institui\u00e7\u00f5es p\u00fablicas e agendas territoriais',
-    ],
-  },
+
   contato: {
     title: 'Contato',
-    subtitle:
-      'Transformar passivos em ativos come\u00e7a por uma conversa clara sobre territ\u00f3rio, res\u00edduos e responsabilidade compartilhada.',
-    formTitle: 'Quero estruturar uma a\u00e7\u00e3o',
     ctaLabel: 'Entrar em contato',
-    image: homeImages.territory.src,
-    perfis: [
-      {
-        value: 'empresa',
-        label: 'Empresa',
-        support: 'Quer estruturar log\u00edstica reversa, educa\u00e7\u00e3o ambiental e crit\u00e9rios de impacto.',
-      },
-      {
-        value: 'escola',
-        label: 'Escola',
-        support: 'Busca uma jornada de educa\u00e7\u00e3o ambiental para estudantes, docentes e comunidade escolar.',
-      },
-      {
-        value: 'prefeitura',
-        label: 'Prefeitura',
-        support: 'Precisa ampliar coleta seletiva, mobiliza\u00e7\u00e3o social e destina\u00e7\u00e3o respons\u00e1vel em escala territorial.',
-      },
-      {
-        value: 'evento',
-        label: 'Evento',
-        support: 'Quer planejar um evento com triagem, equipe de campo e legado socioambiental.',
-      },
-      {
-        value: 'organizacao-social',
-        label: 'Organiza\u00e7\u00e3o social',
-        support: 'Quer cocriar projetos com foco em inclus\u00e3o produtiva, pertencimento e protagonismo comunit\u00e1rio.',
-      },
-      {
-        value: 'comunidade-cooperativa',
-        label: 'Comunidade ou cooperativa',
-        support: 'Busca fortalecimento de rede, capacita\u00e7\u00e3o e conex\u00e3o com oportunidades.',
-      },
-    ],
   },
   footer: {
     message:
       'Res\u00edduo, processo, transforma\u00e7\u00e3o, impacto e parceria: esse \u00e9 o caminho da Eu Quero Liberdade.',
-    rights: `\u00a9 ${new Date().getFullYear()} Eu Quero Liberdade. Prot\u00f3tipo institucional.`,
+    rights: `\u00a9 ${new Date().getFullYear()} Eu Quero Liberdade.`,
   },
 }
