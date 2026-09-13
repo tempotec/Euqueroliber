@@ -40,7 +40,7 @@ export interface InstitutionalImage {
   notes?: string
 }
 
-const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, "")}`
+export const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, "")}`
 
 const publicSrcSet = (value: string) =>
   value

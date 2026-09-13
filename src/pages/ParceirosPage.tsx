@@ -21,7 +21,7 @@ export function ParceirosPage() {
                 key={parceiro.name}
                 className="flex items-center gap-4 rounded-lg border border-[#D9E2D0] bg-white p-4 shadow-sm"
               >
-                <div className="flex h-16 w-24 shrink-0 items-center justify-center rounded-md border border-[#E5E7EB] bg-white p-2">
+                <div className={`flex h-16 w-24 shrink-0 items-center justify-center rounded-md border border-[#E5E7EB] p-2 ${parceiro.name === 'Bizarte' ? 'bg-[#0B0B0B]' : 'bg-white'}`}>
                   {parceiro.logo ? (
                     <img
                       src={parceiro.logo}
