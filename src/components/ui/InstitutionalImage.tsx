@@ -7,10 +7,21 @@ type InstitutionalImageProps = {
   figureClassName: string
   imgClassName?: string
   badgeClassName?: string
+  objectPosition?: string
 }
 
-export function InstitutionalImage({ image, figureClassName, imgClassName, badgeClassName }: InstitutionalImageProps) {
-  const style: CSSProperties | undefined = image.objectPosition ? { objectPosition: image.objectPosition } : undefined
+export function InstitutionalImage({
+  image,
+  figureClassName,
+  imgClassName,
+  badgeClassName,
+  objectPosition,
+}: InstitutionalImageProps) {
+  const style: CSSProperties | undefined = objectPosition
+    ? { objectPosition }
+    : image.objectPosition
+      ? { objectPosition: image.objectPosition }
+      : undefined
 
   return (
     <figure className={figureClassName}>

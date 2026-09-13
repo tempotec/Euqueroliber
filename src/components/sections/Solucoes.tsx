@@ -132,8 +132,13 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
           <div className="relative">
             <InstitutionalImage
               image={item.image}
-              figureClassName="relative aspect-[16/8] overflow-hidden bg-[#082F49] sm:aspect-[16/7]"
+              figureClassName={
+                item.title === 'Gestão de Resíduos'
+                  ? 'relative h-48 overflow-hidden bg-[#082F49] sm:h-56'
+                  : 'relative aspect-[16/8] overflow-hidden bg-[#082F49] sm:aspect-[16/7]'
+              }
               imgClassName="opacity-95"
+              objectPosition={item.title === 'Gestão de Resíduos' ? '50% 65%' : undefined}
             />
           </div>
 
