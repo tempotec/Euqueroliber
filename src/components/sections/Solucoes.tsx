@@ -128,7 +128,7 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
           <X size={18} />
         </button>
 
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+        <div data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
           <div className="relative">
             <InstitutionalImage
               image={item.image}
