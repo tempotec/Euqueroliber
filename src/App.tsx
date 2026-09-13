@@ -14,6 +14,7 @@ import { AdminLoginPage } from './pages/AdminLoginPage'
 import { AdminPublicationFormPage } from './pages/AdminPublicationFormPage'
 import { AdminPublicationsPage } from './pages/AdminPublicationsPage'
 import { PublicacaoDetailPage } from './pages/PublicacaoDetailPage'
+import { ParceirosPage } from './pages/ParceirosPage'
 import { PublicacoesPage } from './pages/PublicacoesPage'
 import { ProjetosClientesPage } from './pages/ProjetosClientesPage'
 
@@ -50,7 +51,8 @@ function AppRoutes() {
           <Route path="/" element={<HomePage />} />
           <Route path="/quem-somos" element={<QuemSomosPage />} />
           <Route path="/solucoes" element={<SolucoesPage />} />
-          <Route path="/projetos-clientes" element={<ProjetosClientesPage />} />
+          <Route path="/projetos" element={<ProjetosClientesPage />} />
+          <Route path="/parceiros" element={<ParceirosPage />} />
           <Route path="/publicacoes" element={<PublicacoesPage />} />
           <Route path="/publicacoes/:slug" element={<PublicacaoDetailPage />} />
           <Route path="/contato" element={<Contato />} />
