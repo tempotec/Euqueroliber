@@ -7,7 +7,6 @@ const headerNav = [
   { label: 'Home', to: '/' },
   { label: 'Quem Somos', to: '/quem-somos' },
   { label: 'Solu\u00e7\u00f5es', to: '/solucoes' },
-  { label: 'Impacto', to: '/impacto' },
   { label: 'Projetos/Clientes', to: '/projetos-clientes' },
   { label: 'Publica\u00e7\u00f5es', to: '/publicacoes' },
   { label: 'Contato', to: '/contato' },

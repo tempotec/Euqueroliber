@@ -6,7 +6,6 @@ import { Header } from './components/layout/Header'
 import { ComoTrabalhamos } from './components/sections/ComoTrabalhamos'
 import { Contato } from './components/sections/Contato'
 import { Hero } from './components/sections/Hero'
-import { Impacto } from './components/sections/Impacto'
 import { QuemSomos } from './components/sections/QuemSomos'
 import { Solucoes } from './components/sections/Solucoes'
 import { useLenis } from './hooks/useLenis'
@@ -51,7 +50,6 @@ function AppRoutes() {
           <Route path="/" element={<HomePage />} />
           <Route path="/quem-somos" element={<QuemSomosPage />} />
           <Route path="/solucoes" element={<SolucoesPage />} />
-          <Route path="/impacto" element={<Impacto />} />
           <Route path="/projetos-clientes" element={<ProjetosClientesPage />} />
           <Route path="/publicacoes" element={<PublicacoesPage />} />
           <Route path="/publicacoes/:slug" element={<PublicacaoDetailPage />} />
