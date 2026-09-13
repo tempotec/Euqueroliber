@@ -1,5 +1,12 @@
 import { homeImages, type InstitutionalImage } from './homeImages'
 
+export type SolutionSection = {
+  heading: string
+  intro?: string | string[]
+  items?: string[]
+  paragraphs?: string[]
+}
+
 export type SolutionContent = {
   title: string
   subtitle: string
@@ -7,7 +14,7 @@ export type SolutionContent = {
   icon: string
   image: InstitutionalImage
   intro: string[]
-  actions: string[]
+  actions?: string[]
   detailImage: InstitutionalImage
   actingIntro?: string
   actingNote?: string | string[]
@@ -15,7 +22,8 @@ export type SolutionContent = {
   impactoSocial?: string[]
   problemHeading?: string
   problemaSolucao?: string[]
-  cta?: string
+  cta?: string | string[]
+  sections?: SolutionSection[]
 }
 
 export const solucoesContent: SolutionContent[] = [
@@ -96,30 +104,65 @@ export const solucoesContent: SolutionContent[] = [
   },
   {
     title: 'Inclusão Produtiva e Economia Circular',
-    subtitle: 'Do reaproveitamento de materiais à geração de trabalho e renda.',
+    subtitle: 'Onde alguns enxergam descarte, nós enxergamos matéria-prima, criatividade e oportunidade.',
     description:
       'Reuso, reparo e transformação criativa que conectam circularidade a trabalho, renda e desenvolvimento territorial.',
     icon: 'Users',
     image: homeImages.reserveImpactCooperativeWork,
     intro: [
-      'A circularidade deve ser apresentada não apenas como reaproveitamento de materiais, mas também como oportunidade de geração de trabalho, renda, autonomia e desenvolvimento territorial.',
-      'Conectamos o ciclo dos materiais às pessoas, fortalecendo cooperativas e empreendedores que transformam resíduos em valor.',
+      'A economia circular propõe uma mudança simples e profunda: substituir a lógica de extrair, consumir e descartar por sistemas capazes de reduzir desperdícios, reaproveitar materiais e prolongar sua permanência nos ciclos produtivos.',
+      'Nossa experiência com reciclagem, cooperativismo e desenvolvimento territorial acrescenta uma dimensão essencial a esse conceito: a circularidade dos materiais também pode movimentar pessoas, conhecimento, trabalho e renda.',
+      'Por isso, articulamos economia circular e criatividade para transformar resíduos em novos recursos e aproximar empresas, comunidades, cooperativas, artesãos, empreendedores, educadores e organizações.',
     ],
-    actions: [
-      'Reuso',
-      'Reparo',
-      'Reciclagem',
-      'Compostagem',
-      'Artesanato',
-      'Transformação criativa',
-      'Reaproveitamento de madeira, plástico, PET, tecidos e outros materiais',
-      'Reaproveitamento de óleo vegetal',
-      'Oficinas produtivas',
-      'Formação de empreendedores e agentes ambientais',
-      'Fortalecimento de cooperativas',
-      'Logística reversa',
-      'Geração de trabalho e renda',
+    sections: [
+      {
+        heading: 'Da matéria-prima à oportunidade',
+        intro: [
+          'Materiais que perderam sua função original podem assumir novos significados por meio do reuso, reparo, reciclagem, compostagem, artesanato e transformação criativa.',
+          'Essa lógica pode gerar:',
+        ],
+        items: [
+          'produtos e peças produzidos a partir de materiais reaproveitados;',
+          'artesanato e design sustentável;',
+          'transformação de madeira, plástico, PET, tecidos e outros resíduos;',
+          'reaproveitamento de óleo vegetal em novos produtos;',
+          'compostagem e utilização do composto em hortas e cultivos;',
+          'oficinas de produção e aprendizagem;',
+          'formação de empreendedores e agentes ambientais;',
+          'fortalecimento de cooperativas e iniciativas locais;',
+          'logística reversa conectada a cadeias produtivas;',
+          'geração de trabalho e renda a partir de materiais recuperados.',
+        ],
+      },
+      {
+        heading: 'Circularidade que inclui pessoas',
+        paragraphs: [
+          'Nossa proposta não termina quando um resíduo volta para a indústria.',
+          'Buscamos construir ciclos em que o valor econômico do material permaneça também nos territórios e alcance quem participa da transformação.',
+          'Isso significa aproximar quem gera o resíduo de quem pode recuperá-lo, transformá-lo ou utilizá-lo como matéria-prima. Significa ainda criar oportunidades para cooperativas, artesãos, empreendedores comunitários, jovens e pessoas que encontram no trabalho uma possibilidade concreta de autonomia.',
+          'A experiência acumulada no cooperativismo nos ensinou que uma cadeia circular se fortalece quando diferentes atores deixam de trabalhar isoladamente e passam a cooperar.',
+        ],
+      },
+      {
+        heading: 'Criatividade também é tecnologia social',
+        paragraphs: [
+          'Transformar uma garrafa, uma madeira descartada, uma peça de tecido, óleo usado ou matéria orgânica é importante. Mas o impacto se amplia quando essa transformação gera conhecimento, pertencimento, capacidades produtivas e novas possibilidades econômicas.',
+          'Por isso, nossas iniciativas podem integrar oficinas, espaços de experimentação, formação, produção artesanal, compostagem, agricultura urbana, reciclagem criativa e articulação comercial.',
+          'Queremos ajudar a construir territórios onde materiais circulem por mais tempo, recursos sejam utilizados com inteligência e mais pessoas possam participar da economia verde.',
+        ],
+      },
+      {
+        heading: 'Empresas, organizações e pessoas podem fazer parte desse ciclo',
+        paragraphs: [
+          'Uma empresa pode destinar materiais. Uma escola pode formar multiplicadores. Uma cooperativa pode realizar triagem e beneficiamento. Um artesão pode transformar. Um território pode produzir. Um parceiro pode financiar, contratar, doar conhecimento, equipamentos ou infraestrutura.',
+          'Economia circular acontece quando essas pontas se encontram.',
+        ],
+      },
     ],
     detailImage: homeImages.projectCommunityReuse,
+    cta: [
+      'Se você representa uma empresa, organização, poder público, cooperativa, instituição de ensino ou iniciativa social, existe espaço para construir essa transformação conosco.',
+      'Vamos transformar resíduos em recursos, criatividade em oportunidade e cooperação em impacto.',
+    ],
   },
 ]

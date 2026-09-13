@@ -61,6 +61,8 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
   const Icon = iconMap[item.icon] ?? Recycle
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
   const isInstitutional = Boolean(item.impactoSocial)
+  const hasSections = Boolean(item.sections && item.sections.length > 0)
+  const isDetailed = isInstitutional || hasSections
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -133,7 +135,9 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
             <InstitutionalImage
               image={item.image}
               figureClassName={
-                item.title === 'Gestão de Resíduos' || item.title === 'Educação Ambiental'
+                item.title === 'Gestão de Resíduos' ||
+                item.title === 'Educação Ambiental' ||
+                item.title === 'Inclusão Produtiva e Economia Circular'
                   ? 'relative h-48 overflow-hidden bg-[#082F49] sm:h-56'
                   : 'relative aspect-[16/8] overflow-hidden bg-[#082F49] sm:aspect-[16/7]'
               }
@@ -153,8 +157,8 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
               {item.subtitle}
             </p>
 
-            {isInstitutional && <h3 className={`${sectionHeadingClass} mt-6`}>Introdução</h3>}
-            <div className={isInstitutional ? 'mt-3 space-y-3' : 'mt-5 space-y-3'}>
+            {isDetailed && <h3 className={`${sectionHeadingClass} mt-6`}>Introdução</h3>}
+            <div className={isDetailed ? 'mt-3 space-y-3' : 'mt-5 space-y-3'}>
               {item.intro.map((paragraph) => (
                 <p key={paragraph} className="text-pretty text-[0.98rem] leading-relaxed text-[#374151] md:text-[1.02rem]">
                   {paragraph}
@@ -162,7 +166,57 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
               ))}
             </div>
 
-            {isInstitutional ? (
+            {hasSections ? (
+              <>
+                {item.sections!.map((section) => (
+                  <div key={section.heading} className="mt-8 border-t border-[#D9E2D0] pt-6">
+                    <h3 className={sectionHeadingClass}>{section.heading}</h3>
+                    {section.intro &&
+                      (Array.isArray(section.intro) ? (
+                        <div className="mt-3 space-y-3">
+                          {section.intro.map((paragraph) => (
+                            <p key={paragraph} className="text-pretty text-[0.98rem] leading-relaxed text-[#374151] md:text-[1.02rem]">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="mt-3 text-pretty text-[0.98rem] leading-relaxed text-[#374151] md:text-[1.02rem]">
+                          {section.intro}
+                        </p>
+                      ))}
+                    {section.items && (
+                      <ul className="mt-3 grid gap-x-6 gap-y-2 md:grid-cols-2">
+                        {section.items.map((listItem) => (
+                          <li key={listItem} className="flex items-start gap-2 text-[0.95rem] leading-relaxed text-[#374151]">
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#F2B705]" aria-hidden="true" />
+                            {listItem}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {section.paragraphs && (
+                      <div className="mt-3 space-y-3">
+                        {section.paragraphs.map((paragraph) => (
+                          <p key={paragraph} className="text-pretty text-[0.98rem] leading-relaxed text-[#374151] md:text-[1.02rem]">
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+                {item.cta && (
+                  <div className="mt-8 rounded-xl bg-[#14532D] p-5 md:p-6">
+                    {(Array.isArray(item.cta) ? item.cta : [item.cta]).map((paragraph) => (
+                      <p key={paragraph} className="text-pretty text-base font-medium leading-relaxed text-white md:text-lg">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : isInstitutional ? (
               <>
                 <div className="mt-6">
                   <h3 className={sectionHeadingClass}>Como atuamos</h3>
@@ -172,7 +226,7 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
                     </p>
                   )}
                   <ul className="mt-3 grid gap-x-6 gap-y-2 md:grid-cols-2">
-                    {item.actions.map((action) => (
+                    {item.actions?.map((action) => (
                       <li key={action} className="flex items-start gap-2 text-[0.95rem] leading-relaxed text-[#374151]">
                         <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#F2B705]" aria-hidden="true" />
                         {action}
@@ -228,7 +282,11 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
 
                 {item.cta && (
                   <div className="mt-8 rounded-xl bg-[#14532D] p-5 md:p-6">
-                    <p className="text-pretty text-base font-medium leading-relaxed text-white md:text-lg">{item.cta}</p>
+                    {(Array.isArray(item.cta) ? item.cta : [item.cta]).map((paragraph) => (
+                      <p key={paragraph} className="text-pretty text-base font-medium leading-relaxed text-white md:text-lg">
+                        {paragraph}
+                      </p>
+                    ))}
                   </div>
                 )}
               </>
@@ -237,7 +295,7 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
                 <div>
                   <h3 className={sectionHeadingClass}>Como atuamos</h3>
                   <ul className="mt-3 space-y-2">
-                    {item.actions.map((action) => (
+                    {item.actions?.map((action) => (
                       <li key={action} className="flex items-start gap-2 text-[0.95rem] leading-relaxed text-[#374151]">
                         <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#F2B705]" aria-hidden="true" />
                         {action}
