@@ -133,7 +133,7 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
             <InstitutionalImage
               image={item.image}
               figureClassName={
-                item.title === 'Gestão de Resíduos'
+                item.title === 'Gestão de Resíduos' || item.title === 'Educação Ambiental'
                   ? 'relative h-48 overflow-hidden bg-[#082F49] sm:h-56'
                   : 'relative aspect-[16/8] overflow-hidden bg-[#082F49] sm:aspect-[16/7]'
               }
@@ -179,11 +179,20 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
                       </li>
                     ))}
                   </ul>
-                  {item.actingNote && (
-                    <p className="mt-3 text-pretty text-[0.98rem] leading-relaxed text-[#374151] md:text-[1.02rem]">
-                      {item.actingNote}
-                    </p>
-                  )}
+                  {item.actingNote &&
+                    (Array.isArray(item.actingNote) ? (
+                      <div className="mt-3 space-y-3">
+                        {item.actingNote.map((note) => (
+                          <p key={note} className="text-pretty text-[0.98rem] leading-relaxed text-[#374151] md:text-[1.02rem]">
+                            {note}
+                          </p>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="mt-3 text-pretty text-[0.98rem] leading-relaxed text-[#374151] md:text-[1.02rem]">
+                        {item.actingNote}
+                      </p>
+                    ))}
                 </div>
 
                 <InstitutionalImage
@@ -191,27 +200,31 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
                   figureClassName="relative mt-6 aspect-[16/8] overflow-hidden rounded-lg border border-[#D9E2D0] bg-[#082F49] shadow-sm"
                 />
 
-                <div className="mt-8 border-t border-[#D9E2D0] pt-6">
-                  <h3 className={sectionHeadingClass}>Gestão ambiental com impacto social</h3>
-                  <div className="mt-3 space-y-3">
-                    {item.impactoSocial?.map((paragraph) => (
-                      <p key={paragraph} className="text-pretty text-[0.98rem] leading-relaxed text-[#374151] md:text-[1.02rem]">
-                        {paragraph}
-                      </p>
-                    ))}
+                {item.impactoSocial && (
+                  <div className="mt-8 border-t border-[#D9E2D0] pt-6">
+                    <h3 className={sectionHeadingClass}>{item.socialHeading ?? 'Gestão ambiental com impacto social'}</h3>
+                    <div className="mt-3 space-y-3">
+                      {item.impactoSocial.map((paragraph) => (
+                        <p key={paragraph} className="text-pretty text-[0.98rem] leading-relaxed text-[#374151] md:text-[1.02rem]">
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
-                <div className="mt-8">
-                  <h3 className={sectionHeadingClass}>Do problema à solução</h3>
-                  <div className="mt-3 space-y-3">
-                    {item.problemaSolucao?.map((paragraph) => (
-                      <p key={paragraph} className="text-pretty text-[0.98rem] leading-relaxed text-[#374151] md:text-[1.02rem]">
-                        {paragraph}
-                      </p>
-                    ))}
+                {item.problemaSolucao && (
+                  <div className="mt-8">
+                    <h3 className={sectionHeadingClass}>{item.problemHeading ?? 'Do problema à solução'}</h3>
+                    <div className="mt-3 space-y-3">
+                      {item.problemaSolucao.map((paragraph) => (
+                        <p key={paragraph} className="text-pretty text-[0.98rem] leading-relaxed text-[#374151] md:text-[1.02rem]">
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {item.cta && (
                   <div className="mt-8 rounded-xl bg-[#14532D] p-5 md:p-6">

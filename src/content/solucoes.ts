@@ -10,8 +10,10 @@ export type SolutionContent = {
   actions: string[]
   detailImage: InstitutionalImage
   actingIntro?: string
-  actingNote?: string
+  actingNote?: string | string[]
+  socialHeading?: string
   impactoSocial?: string[]
+  problemHeading?: string
   problemaSolucao?: string[]
   cta?: string
 }
@@ -68,23 +70,29 @@ export const solucoesContent: SolutionContent[] = [
     icon: 'Leaf',
     image: homeImages.solutionEducation,
     intro: [
-      'Educação ambiental não deve ser apresentada como uma palestra isolada, mas como processo de sensibilização, aprendizagem e mudança de comportamento.',
-      'Atuamos para que o conhecimento vire prática cotidiana, formando pessoas capazes de agir e multiplicar o cuidado com o meio ambiente.',
+      'Educação ambiental, para nós, não é uma ação isolada nem uma palestra que termina quando o encontro acaba. É um processo de sensibilização, aprendizagem e mudança de comportamento, capaz de aproximar pessoas dos desafios do seu território e transformá-las em parte da solução.',
+      'Nossa metodologia nasce da experiência prática com reciclagem, cooperativismo, mobilização comunitária, formação de equipes e gestão de resíduos. Por isso, conectamos informação à realidade: mostramos de onde vêm os resíduos, para onde vão, quem trabalha nessa cadeia e como escolhas aparentemente simples podem gerar impactos ambientais, sociais e econômicos.',
+      'Desenvolvemos ações para escolas, empresas, comunidades, cooperativas, instituições, órgãos públicos e eventos, adaptando linguagem, metodologia e atividades a cada público.',
     ],
     actions: [
-      'Palestras',
-      'Oficinas',
-      'Rodas de conversa',
-      'Formação de crianças, jovens, educadores, trabalhadores e lideranças',
-      'Capacitação de equipes operacionais',
-      'Formação de multiplicadores e agentes ambientais',
-      'Campanhas de mobilização',
-      'Coleta seletiva',
-      'Logística reversa',
-      'Iniciativas Lixo Zero',
-      'Vivências como compostagem, hortas, jardinagem, mutirões e transformação criativa de materiais',
+      'Palestras, oficinas e rodas de conversa, com linguagem acessível e conteúdos conectados ao cotidiano.',
+      'Formação de crianças, adolescentes, jovens, educadores, trabalhadores e lideranças, fortalecendo consciência ambiental e cidadania.',
+      'Capacitação de equipes operacionais, contribuindo para que a separação dos resíduos aconteça corretamente na prática.',
+      'Formação de multiplicadores e agentes ambientais, para que o conhecimento continue circulando depois das atividades.',
+      'Campanhas de mobilização e sensibilização, apoiando programas de coleta seletiva, logística reversa e iniciativas Lixo Zero.',
+      'Vivências práticas, como compostagem, hortas, jardinagem, mutirões, atividades na natureza e transformação criativa de materiais.',
+    ],
+    actingNote: [
+      'Mais do que ensinar onde colocar cada resíduo, buscamos desenvolver uma nova percepção: aquilo que muitas vezes é tratado como lixo pode ser matéria-prima, trabalho, renda, aprendizagem e oportunidade.',
+      'Quando uma criança compreende o valor do território, uma empresa melhora seus processos, uma comunidade começa a separar seus resíduos ou uma cooperativa é reconhecida como parte da solução, a educação ambiental deixa de ser discurso e passa a produzir transformação.',
     ],
     detailImage: homeImages.projectEducationWorkshop,
+    socialHeading: 'Educação que conecta pessoas, território e futuro',
+    impactoSocial: [
+      'Nossa experiência demonstra que equipamentos e lixeiras, sozinhos, não constroem uma cultura sustentável. A transformação acontece quando as pessoas compreendem por que mudar, como participar e quem é beneficiado por essa mudança.',
+      'É essa consciência que buscamos construir.',
+    ],
+    cta: 'Quer desenvolver uma ação de educação ambiental em sua escola, empresa, comunidade ou instituição? Vamos construir essa transformação juntos.',
   },
   {
     title: 'Inclusão Produtiva e Economia Circular',
