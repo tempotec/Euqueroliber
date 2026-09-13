@@ -10,7 +10,7 @@ export function QuemSomos() {
   return (
     <>
       {/* Abertura institucional */}
-      <Section id="quem-somos" className="bg-[#F7F3E8]">
+      <Section id="quem-somos" className="bg-[#F7F3E8] !py-10 lg:!py-12">
         <AnimatedTitle as="h1" className="text-4xl font-semibold tracking-normal text-[#111827] md:text-5xl">
           Quem Somos
         </AnimatedTitle>
@@ -20,15 +20,14 @@ export function QuemSomos() {
       </Section>
 
       {/* História — Robinho Liberdade */}
-      <Section id="historia" className="bg-[#FBF8EF]">
-        <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-12">
+      <Section id="historia" className="bg-[#FBF8EF] !py-10 lg:!py-12">
+        <div className="grid gap-6 lg:grid-cols-[0.7fr_1.3fr] lg:items-start lg:gap-8">
           <InstitutionalImage
             image={homeImages.aboutRobson}
-            figureClassName="relative aspect-[4/3] overflow-hidden rounded-lg border border-[#D9E2D0] bg-white shadow-[0_26px_60px_-40px_rgba(15,23,42,0.55)] sm:aspect-[16/11] lg:aspect-[4/4.6]"
-            imgClassName="lg:min-h-[32rem]"
+            figureClassName="relative aspect-[4/3] overflow-hidden rounded-lg border border-[#D9E2D0] bg-white shadow-sm"
           />
 
-          <div className="space-y-6">
+          <div className="space-y-5">
             <div>
               <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#D97706]">
                 Origem da história
@@ -63,8 +62,8 @@ export function QuemSomos() {
       </Section>
 
       {/* Da trajetória à atuação */}
-      <Section id="atuacao" className="bg-[#F7F3E8]">
-        <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-12">
+      <Section id="atuacao" className="bg-[#F7F3E8] !pt-8 !pb-12 lg:!pt-10 lg:!pb-14">
+        <div className="grid gap-6 lg:grid-cols-[0.92fr_1.08fr] lg:items-start lg:gap-8">
           <div>
             <AnimatedTitle as="h2" className="text-3xl font-semibold tracking-normal text-[#111827] md:text-4xl">
               {atuacao.titulo}

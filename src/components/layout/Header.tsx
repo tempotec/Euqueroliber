@@ -14,7 +14,7 @@ const headerNav = [
 ]
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `rounded-md px-1 py-0.5 text-[0.82rem] font-semibold transition lg:text-sm ${isActive ? 'text-[#14532D] underline decoration-[#F2B705] decoration-2 underline-offset-4' : 'text-[#374151] hover:text-[#166534]'}`
+  `relative rounded-md px-1 py-0.5 text-[0.82rem] font-semibold transition lg:text-sm ${isActive ? 'text-[#14532D] after:absolute after:inset-x-0 after:-bottom-1 after:h-[3px] after:rounded-full after:bg-[#F2B705]' : 'text-[#374151] hover:text-[#166534] hover:after:absolute hover:after:inset-x-0 hover:after:-bottom-1 hover:after:h-[3px] hover:after:rounded-full hover:after:bg-[#D97706]/50'}`
 
 export function Header() {
   const [open, setOpen] = useState(false)
@@ -41,7 +41,7 @@ export function Header() {
           <ul className="space-y-2">
             {headerNav.map((item) => (
               <li key={item.to}>
-                <NavLink to={item.to} end={item.to === '/'} className={({ isActive }) => `block rounded-lg px-2 py-2 text-sm ${isActive ? 'bg-[#F2B705]/15 font-semibold text-[#14532D]' : 'text-[#111827] hover:bg-[#F2B705]/15'}`} onClick={() => setOpen(false)}>{item.label}</NavLink>
+                <NavLink to={item.to} end={item.to === '/'} className={({ isActive }) => `block rounded-lg border-l-4 px-3 py-2 text-sm transition ${isActive ? 'border-[#F2B705] bg-[#F2B705]/15 font-semibold text-[#14532D]' : 'border-transparent text-[#111827] hover:bg-[#F2B705]/15'}`} onClick={() => setOpen(false)}>{item.label}</NavLink>
               </li>
             ))}
           </ul>
