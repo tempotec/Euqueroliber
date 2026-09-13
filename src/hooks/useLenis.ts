@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import Lenis from 'lenis'
 import { useLocation } from 'react-router-dom'
+import { setLenis } from '../lib/lenis'
 
 export function useLenis() {
   const location = useLocation()
@@ -13,6 +14,8 @@ export function useLenis() {
       touchMultiplier: 1.2,
     })
 
+    setLenis(lenis)
+
     let rafId = 0
     const raf = (time: number) => {
       lenis.raf(time)
@@ -23,6 +26,7 @@ export function useLenis() {
 
     return () => {
       cancelAnimationFrame(rafId)
+      setLenis(null)
       lenis.destroy()
     }
   }, [])

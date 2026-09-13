@@ -3,6 +3,7 @@ import { ArrowRight, Leaf, Recycle, Users, X, type LucideIcon } from 'lucide-rea
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { solucoesContent, type SolutionContent } from '../../content/solucoes'
+import { getLenis } from '../../lib/lenis'
 import { InstitutionalImage } from '../ui/InstitutionalImage'
 import { Reveal } from '../ui/Reveal'
 import { Section } from '../ui/Section'
@@ -71,13 +72,33 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
   )
 
   useEffect(() => {
+    const lenis = getLenis()
+    const scrollY = window.scrollY
+    const html = document.documentElement
+    const body = document.body
+    const previousHtmlOverflow = html.style.overflow
+    const previousBodyOverflow = body.style.overflow
+
     document.addEventListener('keydown', handleKeyDown)
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+
+    // Causa raiz: o Lenis (smooth scroll global) intercepta wheel/touch e rola o
+    // window (página de fundo), ignorando o overflow do body. Pausar o Lenis faz
+    // o navegador voltar ao scroll nativo, permitindo que o modal role sozinho
+    // enquanto a página fica travada.
+    lenis?.stop()
+
+    // Trava a página de fundo (scroll container real = window/html).
+    html.style.overflow = 'hidden'
+    body.style.overflow = 'hidden'
+
     closeButtonRef.current?.focus()
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = previousOverflow
+      lenis?.start()
+      html.style.overflow = previousHtmlOverflow
+      body.style.overflow = previousBodyOverflow
+      window.scrollTo({ top: scrollY, left: 0, behavior: 'auto' })
     }
   }, [handleKeyDown])
 
@@ -107,7 +128,7 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
           <X size={18} />
         </button>
 
-        <div className="overflow-y-auto overscroll-contain">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
           <div className="relative">
             <InstitutionalImage
               image={item.image}
