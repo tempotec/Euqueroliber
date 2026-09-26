@@ -206,6 +206,29 @@ function AdminContentEditor({ sectionKey }: AdminContentEditorProps) {
     }
   }
 
+  /**
+   * Abre o preview. Se houver alteracoes locais nao salvas, salva o rascunho ANTES —
+   * assim o preview sempre reflete exatamente o que o usuario acabou de editar.
+   * Nunca publica automaticamente.
+   */
+  const handlePreview = async () => {
+    if (!meta) {
+      return
+    }
+
+    setBanner(null)
+
+    if (isDirty) {
+      const saved = await handleSave()
+
+      if (!saved) {
+        return
+      }
+    }
+
+    navigate(`/admin/conteudo/${meta.key}/preview`)
+  }
+
   const handleRevert = async () => {
     if (!meta) {
       return
@@ -362,6 +385,17 @@ function AdminContentEditor({ sectionKey }: AdminContentEditorProps) {
                 disabled={isBusy}
               >
                 {busy === 'publishing' ? 'Publicando...' : 'Publicar alterações'}
+              </button>
+
+              <button
+                type="button"
+                className={secondaryButton}
+                onClick={() => {
+                  void handlePreview()
+                }}
+                disabled={isBusy}
+              >
+                Visualizar preview
               </button>
 
               <button

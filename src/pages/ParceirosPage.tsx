@@ -1,22 +1,43 @@
+import type { Parceiro } from '../content/parceiros'
 import { parceiros } from '../content/parceiros'
 import { AnimatedTitle } from '../components/ui/AnimatedTitle'
 import { Section } from '../components/ui/Section'
 
-export function ParceirosPage() {
+/**
+ * Conteudo da pagina de Parceiros vindo do CMS (draft_data de `parceiros`).
+ * O `logo` chega como caminho cru no CMS e ja vem resolvido pelo adapter de preview.
+ */
+export interface ParceirosPageContent {
+  heading: string
+  subheading: string
+  items: Parceiro[]
+}
+
+interface ParceirosPageProps {
+  content?: ParceirosPageContent
+}
+
+export function ParceirosPage({ content }: ParceirosPageProps) {
+  const heading = content?.heading ?? 'Parceiros'
+  const subheading =
+    content?.subheading ??
+    'Construímos nossa atuação em rede, conectando organizações, iniciativas e parceiros que contribuem para ampliar conhecimento, estrutura e capacidade de realização.'
+  const items = content?.items ?? parceiros
+
   return (
     <>
       <Section id="parceiros" className="bg-[#F7F3E8]">
         <div className="max-w-4xl">
           <AnimatedTitle as="h1" className="text-4xl font-semibold tracking-normal text-[#111827] md:text-5xl">
-            Parceiros
+            {heading}
           </AnimatedTitle>
 
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#374151] md:text-lg">
-            Construímos nossa atuação em rede, conectando organizações, iniciativas e parceiros que contribuem para ampliar conhecimento, estrutura e capacidade de realização.
+            {subheading}
           </p>
 
           <ul className="mt-8 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
-            {parceiros.map((parceiro) => (
+            {items.map((parceiro) => (
               <li
                 key={parceiro.name}
                 className="flex items-center gap-4 rounded-lg border border-[#D9E2D0] bg-white p-4 shadow-sm"

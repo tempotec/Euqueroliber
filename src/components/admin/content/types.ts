@@ -53,9 +53,19 @@ export interface QuemSomosHistoriaMarco {
 
 export interface QuemSomosContent {
   title: string
+  /**
+   * Campo legado: existe no payload do backend, mas NAO e editavel no painel e NAO e
+   * renderizado pelo site publico. Mantido aqui apenas para descrever o contrato atual —
+   * a limpeza definitiva sera feita antes da integracao publica. Nao reintroduzir no form.
+   */
   lead: string
   image: string
   opening: string
+  /**
+   * Marcos de nivel superior (cards institucionais). Mesma situacao de `lead`: legado no
+   * contrato, sem campo no painel e sem renderizacao no site. NAO confundir com
+   * `historia.marcos`, que E renderizado e continua editavel normalmente.
+   */
   marcos: QuemSomosMarco[]
   historia: {
     nome: string

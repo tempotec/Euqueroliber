@@ -1,7 +1,23 @@
 import { Handshake } from 'lucide-react'
 import { siteContent } from '../../content/site'
 
-export function Footer() {
+/**
+ * Conteudo do rodape vindo do CMS (draft_data de `footer`).
+ *
+ * Apenas `message` e editavel. `brand` e `rights` (copyright/ano) continuam vindo de
+ * site.ts: o ano permanece dinamico e NAO faz parte do conteudo do CMS.
+ */
+export interface FooterSectionContent {
+  message: string
+}
+
+interface FooterProps {
+  content?: FooterSectionContent
+}
+
+export function Footer({ content }: FooterProps) {
+  const message = content?.message ?? siteContent.footer.message
+
   return (
     <footer className="border-t border-[#F2B705]/20 bg-[#082F49] text-[#F7F3E8]">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-5 py-10 md:px-8 md:py-12">
@@ -9,7 +25,7 @@ export function Footer() {
           <Handshake size={18} />
           <span className="text-xs uppercase tracking-[0.16em]">{siteContent.brand}</span>
         </div>
-        <p className="max-w-4xl text-sm leading-relaxed text-[#F7F3E8]/85 md:text-base">{siteContent.footer.message}</p>
+        <p className="max-w-4xl text-sm leading-relaxed text-[#F7F3E8]/85 md:text-base">{message}</p>
         <p className="text-xs text-[#F7F3E8]/65">{siteContent.footer.rights}</p>
       </div>
     </footer>

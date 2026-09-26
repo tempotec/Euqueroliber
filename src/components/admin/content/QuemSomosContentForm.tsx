@@ -26,19 +26,12 @@ export function QuemSomosContentForm({
 
   return (
     <div className="space-y-6">
-      <FormSection title="Abertura" description="Título e chamada exibidos no topo da página.">
+      <FormSection title="Abertura" description="Título exibido no topo da página.">
         <TextField
           label="Título"
           value={value.title}
           disabled={disabled}
           onChange={(title) => onChange({ ...value, title })}
-        />
-        <TextAreaField
-          label="Chamada"
-          value={value.lead}
-          rows={2}
-          disabled={disabled}
-          onChange={(lead) => onChange({ ...value, lead })}
         />
         <ImageUrlField
           label="Imagem"
@@ -52,38 +45,6 @@ export function QuemSomosContentForm({
           rows={4}
           disabled={disabled}
           onChange={(opening) => onChange({ ...value, opening })}
-        />
-      </FormSection>
-
-      <FormSection
-        title="Marcos institucionais"
-        description="Cards de marcos exibidos na página. É possível adicionar, remover e reordenar."
-      >
-        <ObjectListEditor
-          label="Marcos"
-          addLabel="Adicionar marco"
-          items={value.marcos}
-          disabled={disabled}
-          createItem={() => ({ title: '', description: '' })}
-          itemTitle={(item, index) => item.title || `Marco ${index + 1}`}
-          onChange={(marcos) => onChange({ ...value, marcos })}
-          renderItem={(item, update) => (
-            <>
-              <TextField
-                label="Título do marco"
-                value={item.title}
-                disabled={disabled}
-                onChange={(title) => update({ ...item, title })}
-              />
-              <TextAreaField
-                label="Descrição do marco"
-                value={item.description}
-                rows={3}
-                disabled={disabled}
-                onChange={(description) => update({ ...item, description })}
-              />
-            </>
-          )}
         />
       </FormSection>
 

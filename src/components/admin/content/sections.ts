@@ -19,7 +19,7 @@ export const ADMIN_CONTENT_SECTIONS: AdminContentSectionMeta[] = [
   {
     key: 'quem_somos',
     name: 'Quem Somos',
-    description: 'História, marcos institucionais e atuação.',
+    description: 'Título, abertura, história e atuação.',
   },
   {
     key: 'solucoes',

@@ -1,14 +1,40 @@
 import { useCallback } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
+import type { InstitutionalImage as InstitutionalImageConfig } from '../../content/homeImages'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { projetosContent } from '../../content/projetos'
 import { InstitutionalImage } from '../ui/InstitutionalImage'
 import { Section } from '../ui/Section'
 
-type ProjectItem = (typeof projetosContent)[number]
+/**
+ * Item da timeline no formato que o componente consome.
+ *
+ * Declarado explicitamente (em vez de derivar do conteudo estatico) porque o CMS
+ * alimenta o mesmo componente: o site guarda `loading` como literal e o tipo de imagem
+ * esperado e `'lazy' | 'eager'`.
+ */
+export interface ProjetosTimelineItem {
+  title: string
+  description: string
+  image: InstitutionalImageConfig
+}
+
+/**
+ * Itens da timeline vindos do CMS (draft_data de `projetos`).
+ *
+ * O titulo e o subtitulo internos desta secao NAO existem no CMS (sao conteudo fixo do
+ * componente) e por isso continuam estaticos — o preview preserva exatamente isso.
+ */
+export interface ProjetosTimelineContent {
+  items: ProjetosTimelineItem[]
+}
+
+interface ProjetosTimelineProps {
+  content?: ProjetosTimelineContent
+}
 
 type ProjectCardProps = {
-  projeto: ProjectItem
+  projeto: ProjetosTimelineItem
   index: number
 }
 
@@ -30,7 +56,8 @@ function ProjectCard({ projeto, index }: ProjectCardProps) {
   )
 }
 
-export function ProjetosTimeline() {
+export function ProjetosTimeline({ content }: ProjetosTimelineProps) {
+  const items = content?.items ?? projetosContent
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     loop: false,
@@ -73,7 +100,7 @@ export function ProjetosTimeline() {
 
       <div className="relative mt-7 overflow-hidden" ref={emblaRef}>
         <div className="flex gap-4 pb-2 pt-1">
-          {projetosContent.map((projeto, index) => (
+          {items.map((projeto, index) => (
             <ProjectCard key={projeto.title} projeto={projeto} index={index} />
           ))}
         </div>

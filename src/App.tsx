@@ -11,6 +11,7 @@ import { Solucoes } from './components/sections/Solucoes'
 import { useLenis } from './hooks/useLenis'
 import { AdminContentEditorPage } from './pages/AdminContentEditorPage'
 import { AdminContentPage } from './pages/AdminContentPage'
+import { AdminContentPreviewPage } from './pages/AdminContentPreviewPage'
 import { AdminDashboardPage } from './pages/AdminDashboardPage'
 import { AdminLoginPage } from './pages/AdminLoginPage'
 import { AdminPublicationFormPage } from './pages/AdminPublicationFormPage'
@@ -81,6 +82,14 @@ function AppRoutes() {
         element={(
           <ProtectedRoute>
             <AdminContentEditorPage />
+          </ProtectedRoute>
+        )}
+      />
+      <Route
+        path="/admin/conteudo/:key/preview"
+        element={(
+          <ProtectedRoute>
+            <AdminContentPreviewPage />
           </ProtectedRoute>
         )}
       />

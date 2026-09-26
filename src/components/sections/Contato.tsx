@@ -34,10 +34,47 @@ const EMPTY_FORM: FormState = {
   website: '',
 }
 
-export function Contato() {
-  const [form, setForm] = useState<FormState>(EMPTY_FORM)
+/**
+ * Conteudo da secao Contato vindo do CMS (draft_data de `contato`).
+ *
+ * `fields` (rotulos tecnicos dos campos) NAO e editavel e por isso nao entra aqui.
+ *
+ * Em `previewMode` o formulario aparece exatamente igual, mas o envio e bloqueado:
+ * nenhum POST /api/v1/contact e disparado e nenhuma mensagem entra no banco.
+ */
+export interface ContatoSectionContent {
+  title: string
+  intro: string
+  ctaLabel: string
+  sendingLabel: string
+  successMessage: string
+  subjects: string[]
+}
+
+interface ContatoProps {
+  content?: ContatoSectionContent
+  previewMode?: boolean
+}
+
+export function Contato({ content, previewMode = false }: ContatoProps) {
+  // Fallback: sem conteudo do CMS, permanece a fonte estatica original.
+  const title = content?.title ?? siteContent.contato.title
+  const intro =
+    content?.intro ??
+    'Quer desenvolver uma ação, projeto ou parceria? Conte um pouco sobre o que você precisa.'
+  const ctaLabel = content?.ctaLabel ?? siteContent.contato.ctaLabel
+  const sendingLabel = content?.sendingLabel ?? 'Enviando...'
+  const successMessage =
+    content?.successMessage ?? 'Mensagem enviada com sucesso. Obrigado pelo contato.'
+  const subjects = content?.subjects ?? SUBJECT_OPTIONS
+
+  const [form, setForm] = useState<FormState>(() => ({
+    ...EMPTY_FORM,
+    subject: subjects[0] ?? EMPTY_FORM.subject,
+  }))
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [error, setError] = useState('')
+  const [previewNotice, setPreviewNotice] = useState('')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
 
   function updateField(field: keyof FormState, value: string) {
@@ -78,6 +115,14 @@ export function Contato() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
+    // Modo preview administrativo: nunca envia mensagem real para o backend.
+    if (previewMode) {
+      setStatus('idle')
+      setError('')
+      setPreviewNotice('Envio desabilitado no modo preview.')
+      return
+    }
+
     const errors = validate()
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors)
@@ -102,7 +147,8 @@ export function Contato() {
 
       setStatus('success')
       setFieldErrors({})
-      setForm(EMPTY_FORM)
+      setForm({ ...EMPTY_FORM, subject: subjects[0] ?? EMPTY_FORM.subject })
+      setPreviewNotice('')
     } catch (err) {
       setStatus('error')
 
@@ -127,10 +173,10 @@ export function Contato() {
         <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-12">
           <div>
             <AnimatedTitle as="h1" className="text-4xl font-semibold tracking-normal text-[#111827] md:text-5xl">
-              {siteContent.contato.title}
+              {title}
             </AnimatedTitle>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#374151] md:text-lg">
-              Quer desenvolver uma ação, projeto ou parceria? Conte um pouco sobre o que você precisa.
+              {intro}
             </p>
           </div>
 
@@ -230,7 +276,7 @@ export function Contato() {
                 value={form.subject}
                 onChange={(e) => updateField('subject', e.target.value)}
               >
-                {SUBJECT_OPTIONS.map((option) => (
+                {subjects.map((option) => (
                   <option key={option} value={option}>
                     {option}
                   </option>
@@ -263,11 +309,14 @@ export function Contato() {
             <div aria-live="polite">
               {status === 'success' ? (
                 <p className="text-sm font-semibold text-[#14532D]">
-                  Mensagem enviada com sucesso. Obrigado pelo contato.
+                  {successMessage}
                 </p>
               ) : null}
               {status === 'error' ? (
                 <p className="text-sm font-semibold text-[#DC2626]">{error}</p>
+              ) : null}
+              {previewNotice ? (
+                <p className="text-sm font-semibold text-[#B45309]">{previewNotice}</p>
               ) : null}
             </div>
 
@@ -276,7 +325,7 @@ export function Contato() {
               disabled={status === 'sending'}
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#14532D] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#166534] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {status === 'sending' ? 'Enviando...' : siteContent.contato.ctaLabel}
+              {status === 'sending' ? sendingLabel : ctaLabel}
             </button>
           </div>
         </form>

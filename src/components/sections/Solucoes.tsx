@@ -334,7 +334,28 @@ function SolutionModal({ item, onClose }: SolutionModalProps) {
   )
 }
 
-export function Solucoes() {
+/**
+ * Conteudo da secao Solucoes vindo do CMS (draft_data de `solucoes`).
+ *
+ * Os itens sao repassados SEM normalizacao: as diferencas legitimas entre as 3 solucoes
+ * (socialHeading, sections internas, `cta` como texto ou lista) sao preservadas intactas.
+ */
+export interface SolucoesSectionContent {
+  heading: string
+  subheading: string
+  items: SolutionContent[]
+}
+
+interface SolucoesProps {
+  content?: SolucoesSectionContent
+}
+
+export function Solucoes({ content }: SolucoesProps) {
+  const heading = content?.heading ?? 'Soluções'
+  const subheading =
+    content?.subheading ??
+    'Atuamos em três frentes que se complementam: cuidar dos resíduos, educar para transformar e gerar valor com a economia circular.'
+  const items = content?.items ?? solucoesContent
   const [active, setActive] = useState<SolutionContent | null>(null)
   const triggerRef = useRef<HTMLElement | null>(null)
 
@@ -353,15 +374,14 @@ export function Solucoes() {
   return (
     <Section id="solucoes" className="bg-[#F7F3E8]">
       <Reveal>
-        <h2 className="text-balance text-3xl font-semibold tracking-normal text-[#111827] md:text-4xl">Soluções</h2>
+        <h2 className="text-balance text-3xl font-semibold tracking-normal text-[#111827] md:text-4xl">{heading}</h2>
         <p className="mt-3 max-w-3xl text-pretty text-[1.03rem] leading-relaxed text-[#374151] md:text-lg">
-          Atuamos em três frentes que se complementam: cuidar dos resíduos, educar para transformar e gerar valor com a
-          economia circular.
+          {subheading}
         </p>
       </Reveal>
 
       <div className="mt-8 grid gap-5 md:grid-cols-3 lg:gap-6">
-        {solucoesContent.map((item) => (
+        {items.map((item) => (
           <SolutionCard key={item.title} item={item} onOpen={open} />
         ))}
       </div>

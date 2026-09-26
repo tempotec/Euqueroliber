@@ -1,21 +1,47 @@
+import type { Widen } from '../../lib/widen'
+import type { InstitutionalImage as InstitutionalImageConfig } from '../../content/homeImages'
 import { homeImages } from '../../content/homeImages'
 import { quemSomosContent } from '../../content/quemSomos'
 import { AnimatedTitle } from '../ui/AnimatedTitle'
 import { InstitutionalImage } from '../ui/InstitutionalImage'
 import { Section } from '../ui/Section'
 
-export function QuemSomos() {
-  const { historia, atuacao } = quemSomosContent
+/**
+ * Conteudo de Quem Somos vindo do CMS (draft_data de `quem_somos`).
+ * Sem `content`, o componente usa quemSomos.ts + homeImages.ts (comportamento atual).
+ *
+ * Observacao: o draft do CMS tambem possui `lead` e `marcos` no nivel raiz, mas o
+ * componente publico atual NAO renderiza esses campos — o preview tambem nao os exibe
+ * (nao inventamos visual que o site real nao tem).
+ */
+export interface QuemSomosSectionContent {
+  title: string
+  opening: string
+  image: InstitutionalImageConfig
+  historia: Widen<typeof quemSomosContent.historia>
+  atuacao: Widen<typeof quemSomosContent.atuacao>
+}
+
+interface QuemSomosProps {
+  content?: QuemSomosSectionContent
+}
+
+export function QuemSomos({ content }: QuemSomosProps) {
+  const title = content?.title ?? 'Quem Somos'
+  const opening = content?.opening ?? quemSomosContent.opening
+  const image = content?.image ?? homeImages.aboutRobson
+  const historia = content?.historia ?? quemSomosContent.historia
+  const atuacao = content?.atuacao ?? quemSomosContent.atuacao
 
   return (
     <>
       {/* Abertura institucional */}
       <Section id="quem-somos" className="bg-[#F7F3E8] !py-10 lg:!py-12">
         <AnimatedTitle as="h1" className="text-4xl font-semibold tracking-normal text-[#111827] md:text-5xl">
-          Quem Somos
+          {title}
         </AnimatedTitle>
         <p className="mt-4 max-w-3xl text-base leading-relaxed text-[#374151] md:text-lg">
-          {quemSomosContent.opening}
+          {opening}
         </p>
       </Section>
 
@@ -23,7 +49,7 @@ export function QuemSomos() {
       <Section id="historia" className="bg-[#FBF8EF] !py-10 lg:!py-12">
         <div className="grid gap-6 lg:grid-cols-[0.7fr_1.3fr] lg:items-start lg:gap-8">
           <InstitutionalImage
-            image={homeImages.aboutRobson}
+            image={image}
             figureClassName="relative aspect-[4/3] overflow-hidden rounded-lg border border-[#D9E2D0] bg-white shadow-sm"
           />
 

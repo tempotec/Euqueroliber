@@ -1,6 +1,7 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef } from 'react'
+import type { InstitutionalImage as InstitutionalImageConfig } from '../../content/homeImages'
 import { homeImages } from '../../content/homeImages'
 import { siteContent } from '../../content/site'
 import { AnimatedTitle } from '../ui/AnimatedTitle'
@@ -9,7 +10,24 @@ import { Section } from '../ui/Section'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export function ComoTrabalhamos() {
+/**
+ * Conteudo de Como Trabalhamos vindo do CMS (draft_data de `processo`).
+ * A numeracao das etapas continua sendo gerada pelo proprio componente.
+ */
+export interface ProcessoSectionContent {
+  title: string
+  image: InstitutionalImageConfig
+  steps: string[]
+}
+
+interface ComoTrabalhamosProps {
+  content?: ProcessoSectionContent
+}
+
+export function ComoTrabalhamos({ content }: ComoTrabalhamosProps) {
+  const title = content?.title ?? siteContent.processo.title
+  const image = content?.image ?? homeImages.process
+  const steps = content?.steps ?? siteContent.processo.steps
   const cardsRef = useRef<Array<HTMLDivElement | null>>([])
 
   useEffect(() => {
@@ -45,18 +63,18 @@ export function ComoTrabalhamos() {
   return (
     <Section id="como-trabalhamos" className="bg-[linear-gradient(180deg,#F7F3E8_0%,#FBF8EF_100%)]">
       <AnimatedTitle as="h2" className="text-3xl font-semibold tracking-normal text-[#111827] md:text-4xl">
-        {siteContent.processo.title}
+        {title}
       </AnimatedTitle>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-stretch">
         <InstitutionalImage
-          image={homeImages.process}
+          image={image}
           figureClassName="relative aspect-[4/3] overflow-hidden rounded-lg border border-[#D9E2D0] bg-[#082F49] shadow-[0_22px_50px_-36px_rgba(15,23,42,0.45)] lg:aspect-[5/4]"
           imgClassName="transition duration-300 hover:scale-[1.015]"
         />
 
         <div className="grid gap-3.5">
-          {siteContent.processo.steps.map((step, index) => (
+          {steps.map((step, index) => (
             <div
               key={step}
               ref={(el) => {
