@@ -28,17 +28,6 @@ export const siteContent = {
       { title: 'Impacto coletivo', description: 'Fortalecimento de trabalho, renda e inclus\u00e3o produtiva.' },
     ],
   },
-  proposito: {
-    title: 'Prop\u00f3sito',
-    subtitle: 'Transformar passivos em ativos.',
-    image: homeImages.purpose.src,
-    pares: [
-      ['Res\u00edduo descartado', 'Mat\u00e9ria-prima'],
-      ['Pessoa exclu\u00edda', 'Trabalhador inclu\u00eddo'],
-      ['Territ\u00f3rio vulner\u00e1vel', 'Comunidade educada'],
-      ['Descarte irregular', 'Log\u00edstica reversa'],
-    ],
-  },
   processo: {
     title: 'Como Trabalhamos',
     image: homeImages.process.src,
@@ -51,16 +40,6 @@ export const siteContent = {
       'Relat\u00f3rio de impacto',
     ],
   },
-  diferenciais: {
-    title: 'Diferenciais',
-    image: homeImages.manifesto.src,
-    frases: [
-      'N\u00e3o fazemos apenas gest\u00e3o de res\u00edduos. Fazemos gest\u00e3o de oportunidades.',
-      'N\u00e3o tratamos apenas do descarte. Tratamos de pessoas, fam\u00edlias e territ\u00f3rios.',
-      'A log\u00edstica reversa tamb\u00e9m pode ser humana: retorno \u00e0 cidadania, ao trabalho e ao pertencimento.',
-    ],
-  },
-
   contato: {
     title: 'Contato',
     ctaLabel: 'Entrar em contato',
