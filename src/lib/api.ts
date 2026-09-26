@@ -200,3 +200,63 @@ export async function sendContactMessage(data: ContactPayload) {
     body: data,
   })
 }
+
+/* ------------------------------------------------------------------ *
+ * CMS institucional — conteudo do site
+ * Funcoes exclusivas do CMS. Nao alteram os contratos de Publicacoes.
+ * ------------------------------------------------------------------ */
+
+export type ContentSectionKey =
+  | 'home'
+  | 'quem_somos'
+  | 'solucoes'
+  | 'processo'
+  | 'projetos'
+  | 'parceiros'
+  | 'contato'
+  | 'footer'
+
+export type ContentData = Record<string, unknown>
+
+export type AdminContentSection = {
+  id: number
+  key: ContentSectionKey
+  draft_data: ContentData
+  published_data: ContentData
+  published_at: string | null
+  created_at: string | null
+  updated_at: string | null
+}
+
+export async function getAdminContentSections() {
+  return apiRequest<{ sections: AdminContentSection[] }>('/api/v1/admin/content', {
+    method: 'GET',
+  })
+}
+
+export async function getAdminContentSection(key: string) {
+  return apiRequest<AdminContentSection>(`/api/v1/admin/content/${encodeURIComponent(key)}`, {
+    method: 'GET',
+  })
+}
+
+export async function updateAdminContentDraft(key: string, data: ContentData) {
+  return apiRequest<AdminContentSection>(`/api/v1/admin/content/${encodeURIComponent(key)}`, {
+    method: 'PUT',
+    body: { data },
+  })
+}
+
+export async function publishAdminContent(key: string) {
+  return apiRequest<AdminContentSection>(
+    `/api/v1/admin/content/${encodeURIComponent(key)}/publish`,
+    { method: 'POST' },
+  )
+}
+
+export async function revertAdminContent(key: string) {
+  return apiRequest<AdminContentSection>(
+    `/api/v1/admin/content/${encodeURIComponent(key)}/revert`,
+    { method: 'POST' },
+  )
+}

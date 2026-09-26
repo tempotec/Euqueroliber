@@ -53,13 +53,16 @@ export function AdminDashboardPage() {
             <NavLink to="/admin" end className={navLinkClass}>
               Painel
             </NavLink>
+            <NavLink to="/admin/conteudo" className={navLinkClass}>
+              Conteúdo do site
+            </NavLink>
             <NavLink to="/admin/publicacoes" className={navLinkClass}>
               Publicações
             </NavLink>
           </nav>
         </div>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
+        <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <div className="rounded-[2rem] border border-[var(--border)] bg-white/88 px-8 py-8 shadow-[0_24px_90px_rgba(8,47,73,0.08)]">
             <p className="text-sm uppercase tracking-[0.22em] text-[var(--amber)]">
               Painel
@@ -69,8 +72,27 @@ export function AdminDashboardPage() {
             </h2>
             <p className="mt-3 max-w-2xl text-base text-[var(--muted)]">
               Área central do gerenciamento de conteúdo. A partir daqui você
-              acessa as publicações do site.
+              acessa o conteúdo do site e as publicações.
             </p>
+          </div>
+
+          <div className="rounded-[2rem] border border-[var(--border)] bg-white/88 px-8 py-8 shadow-[0_24px_90px_rgba(8,47,73,0.08)]">
+            <p className="text-sm uppercase tracking-[0.22em] text-[var(--amber)]">
+              Conteúdo do site
+            </p>
+            <h2 className="mt-4 text-2xl font-semibold text-[var(--blue-deep)]">
+              Edite páginas e textos
+            </h2>
+            <p className="mt-3 max-w-2xl text-base text-[var(--muted)]">
+              Edite os textos institucionais das seções do site, salve rascunhos e
+              publique quando estiver pronto.
+            </p>
+            <NavLink
+              to="/admin/conteudo"
+              className="mt-5 inline-flex items-center justify-center rounded-full bg-[linear-gradient(135deg,_#0F3A5F,_#14532D)] px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            >
+              Gerenciar conteúdo
+            </NavLink>
           </div>
 
           <div className="rounded-[2rem] border border-[var(--border)] bg-white/88 px-8 py-8 shadow-[0_24px_90px_rgba(8,47,73,0.08)]">

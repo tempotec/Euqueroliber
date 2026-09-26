@@ -9,6 +9,8 @@ import { Hero } from './components/sections/Hero'
 import { QuemSomos } from './components/sections/QuemSomos'
 import { Solucoes } from './components/sections/Solucoes'
 import { useLenis } from './hooks/useLenis'
+import { AdminContentEditorPage } from './pages/AdminContentEditorPage'
+import { AdminContentPage } from './pages/AdminContentPage'
 import { AdminDashboardPage } from './pages/AdminDashboardPage'
 import { AdminLoginPage } from './pages/AdminLoginPage'
 import { AdminPublicationFormPage } from './pages/AdminPublicationFormPage'
@@ -63,6 +65,22 @@ function AppRoutes() {
         element={(
           <ProtectedRoute>
             <AdminDashboardPage />
+          </ProtectedRoute>
+        )}
+      />
+      <Route
+        path="/admin/conteudo"
+        element={(
+          <ProtectedRoute>
+            <AdminContentPage />
+          </ProtectedRoute>
+        )}
+      />
+      <Route
+        path="/admin/conteudo/:key"
+        element={(
+          <ProtectedRoute>
+            <AdminContentEditorPage />
           </ProtectedRoute>
         )}
       />
