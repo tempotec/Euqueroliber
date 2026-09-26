@@ -13,6 +13,17 @@ PUBLICATION_STATUSES = {
     PUBLICATION_STATUS_PUBLISHED,
 }
 
+CONTENT_SECTION_KEYS = {
+    "home",
+    "quem_somos",
+    "solucoes",
+    "processo",
+    "projetos",
+    "parceiros",
+    "contato",
+    "footer",
+}
+
 
 def utc_now() -> datetime:
     return datetime.now(UTC)
@@ -191,3 +202,51 @@ class ContactMessage(db.Model):
             "message": self.message,
             "created_at": self.serialize_datetime(self.created_at),
         }
+
+
+class ContentSection(db.Model):
+    __tablename__ = "content_sections"
+
+    id = db.Column(db.Integer, primary_key=True)
+    key = db.Column(db.String(120), nullable=False, unique=True, index=True)
+    draft_data = db.Column(db.JSON, nullable=False, default=dict)
+    published_data = db.Column(db.JSON, nullable=False, default=dict)
+    created_at = db.Column(db.DateTime(timezone=True), nullable=False, default=utc_now)
+    updated_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=False,
+        default=utc_now,
+        onupdate=utc_now,
+    )
+    published_at = db.Column(db.DateTime(timezone=True), nullable=True)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def to_admin_dict(self) -> dict[str, object]:
+        return {
+            "id": self.id,
+            "key": self.key,
+            "draft_data": self.draft_data,
+            "published_data": self.published_data,
+            "published_at": self.serialize_datetime(self.published_at),
+            "created_at": self.serialize_datetime(self.created_at),
+            "updated_at": self.serialize_datetime(self.updated_at),
+        }
+
+    def to_public_dict(self) -> dict[str, object]:
+        return {
+            "key": self.key,
+            "data": self.published_data,
+            "published_at": self.serialize_datetime(self.published_at),
+        }
+
+    @staticmethod
+    def serialize_datetime(value: datetime | None) -> str | None:
+        if value is None:
+            return None
+
+        if value.tzinfo is None:
+            value = value.replace(tzinfo=UTC)
+
+        return value.astimezone(UTC).isoformat()

@@ -1,0 +1,463 @@
+{
+  "home": {
+    "brand": "Eu Quero Liberdade",
+    "hero": {
+      "title": "Transformamos resíduos em dignidade, trabalho e liberdade.",
+      "image": "/images/hero-reciclagem.jpg",
+      "subtitle": "Educação ambiental, gestão de resíduos, logística reversa e inclusão socioprodutiva para comunidades, empresas, escolas, eventos e poder público.",
+      "ctas": [
+        {
+          "label": "Conheça nossa história"
+        },
+        {
+          "label": "Fale com a gente"
+        }
+      ]
+    }
+  },
+  "quem_somos": {
+    "title": "Quem Somos",
+    "lead": "A Eu Quero Liberdade nasce da trajetória de Robson Borges, o Robinho Liberdade, liderança social ligada à reciclagem, ao cooperativismo e à transformação territorial.",
+    "image": "/images/robson-borges-robinho-liberdade.jpg",
+    "marcos": [
+      {
+        "title": "Origem territorial",
+        "description": "Trajetória conectada à reciclagem, ao cooperativismo e à transformação social."
+      },
+      {
+        "title": "Redes cooperativas",
+        "description": "Articulação com redes e lideranças do setor da reciclagem."
+      },
+      {
+        "title": "Grandes eventos",
+        "description": "Experiência relacionada a operações ambientais em ambientes de grande circulação."
+      },
+      {
+        "title": "Impacto coletivo",
+        "description": "Fortalecimento de trabalho, renda e inclusão produtiva."
+      }
+    ],
+    "opening": "A Eu Quero Liberdade é uma iniciativa que conecta sustentabilidade, inclusão produtiva, cooperativismo, educação ambiental, economia circular e desenvolvimento territorial.",
+    "historia": {
+      "nome": "Robson Borges",
+      "nomePublico": "Robinho Liberdade",
+      "destaque": "2004",
+      "paragrafos": [
+        "Robson Borges, o Robinho Liberdade, nasceu em 1978, em Minas Gerais, e cresceu no Complexo do Alemão, no Rio de Janeiro. Sua trajetória passou por contextos de vulnerabilidade, violência, dependência de drogas e o sistema prisional.",
+        "Em 2004, após recuperar a liberdade, decidiu transformar essa experiência em oportunidade de reconstrução. Encontrou no trabalho com reciclagem um caminho de recomeço.",
+        "Essa trajetória contribuiu para o surgimento da Cooperativa de Reciclagem Eu Quero Liberdade, que passou a conectar inclusão socioprodutiva, cooperativismo e sustentabilidade."
+      ],
+      "marcos": [
+        {
+          "ano": "1978",
+          "texto": "Nascimento em Minas Gerais."
+        },
+        {
+          "ano": "Complexo do Alemão",
+          "texto": "Crescimento e trajetória no Rio de Janeiro."
+        },
+        {
+          "ano": "2004",
+          "texto": "Recuperação da liberdade e início da reconstrução."
+        },
+        {
+          "ano": "Reciclagem",
+          "texto": "Caminho de recomeço pelo trabalho."
+        }
+      ]
+    },
+    "atuacao": {
+      "titulo": "Da trajetória à atuação",
+      "paragrafo": "A experiência pessoal evoluiu para uma atuação institucional que articula diferentes frentes de transformação socioambiental.",
+      "temas": [
+        "Educação ambiental",
+        "Gestão de resíduos",
+        "Economia circular e criativa",
+        "Cooperativismo",
+        "Inclusão produtiva",
+        "Inovação social",
+        "Articulação comunitária"
+      ]
+    }
+  },
+  "solucoes": {
+    "heading": "Soluções",
+    "subheading": "Atuamos em três frentes que se complementam: cuidar dos resíduos, educar para transformar e gerar valor com a economia circular.",
+    "items": [
+      {
+        "title": "Gestão de Resíduos",
+        "subtitle": "Do resíduo descartado ao recurso corretamente destinado.",
+        "description": "Diagnóstico, coleta seletiva, logística e destinação adequada para transformar resíduos em recursos bem encaminhados.",
+        "icon": "Recycle",
+        "image": {
+          "src": "/images/solucao-coleta-logistica.jpg",
+          "alt": "Trabalhadores carregando grande volume de garrafas plásticas para coleta e transporte.",
+          "objectPosition": "52% 62%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        },
+        "intro": [
+          "Gerenciar resíduos é muito mais do que retirar materiais de um lugar. É compreender o que está sendo gerado, como separar, armazenar, movimentar, medir e destinar corretamente, criando um fluxo ambientalmente responsável e socialmente justo.",
+          "Nossa atuação foi construída ao longo de anos de experiência prática com coleta seletiva, triagem, reciclagem, cooperativismo, logística, gravimetria, formação de equipes e articulação com diferentes atores da cadeia de resíduos.",
+          "Essa vivência permite olhar para cada operação de forma integrada: do comportamento de quem gera o resíduo até sua chegada à cooperativa, recicladora ou solução adequada de tratamento."
+        ],
+        "actingIntro": "Desenvolvemos soluções de acordo com a realidade de empresas, escolas, comunidades, condomínios, organizações, eventos e instituições públicas, incluindo:",
+        "actions": [
+          "diagnóstico dos resíduos e dos fluxos existentes",
+          "implantação e aprimoramento da coleta seletiva",
+          "definição e organização de pontos de descarte",
+          "orientação para separação e acondicionamento",
+          "capacitação de equipes",
+          "triagem, classificação e gravimetria",
+          "planejamento logístico",
+          "articulação com cooperativas e recicladores",
+          "logística reversa",
+          "destinação ambientalmente adequada",
+          "acompanhamento de indicadores e resultados",
+          "apoio a programas e projetos Lixo Zero"
+        ],
+        "actingNote": "Sempre que possível, priorizamos a conexão com cooperativas e cadeias produtivas capazes de devolver os materiais ao ciclo econômico, contribuindo simultaneamente para reduzir impactos ambientais e fortalecer trabalho e renda.",
+        "detailImage": {
+          "src": "/images/solucao-triagem-residuos.jpg",
+          "alt": "Trabalhadores em linha de triagem separando resíduos recicláveis.",
+          "objectPosition": "50% 50%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        },
+        "impactoSocial": [
+          "Nosso diferencial está em compreender que existe uma cadeia humana por trás de cada material recuperado.",
+          "Papel, plástico, metal, vidro, óleo, resíduos orgânicos e outros materiais não precisam encerrar sua trajetória no descarte. Quando existe planejamento, educação e articulação, eles podem voltar à produção, alimentar novos processos e fortalecer trabalhadores, cooperativas e territórios.",
+          "Por isso, não tratamos gestão de resíduos como uma operação isolada. Integramos educação ambiental, organização operacional, economia circular, cooperativismo e inclusão socioprodutiva.",
+          "Uma gestão eficiente precisa produzir resultados que possam ser percebidos e acompanhados: redução do descarte inadequado, aumento da recuperação de materiais, participação das pessoas, fortalecimento da cadeia da reciclagem e melhoria das condições ambientais do território."
+        ],
+        "problemaSolucao": [
+          "Empresas e instituições podem ser grandes aliadas dessa transformação. Comunidades e cooperativas também.",
+          "Nosso papel é construir as conexões necessárias para que responsabilidade ambiental se transforme em ação concreta, resultado e impacto positivo compartilhado."
+        ],
+        "cta": "Precisa estruturar ou melhorar a gestão de resíduos da sua organização, território ou projeto? Vamos construir uma solução adequada à sua realidade."
+      },
+      {
+        "title": "Educação Ambiental",
+        "subtitle": "Conhecimento que se transforma em atitude, cuidado e participação.",
+        "description": "Sensibilização, aprendizagem e mudança de comportamento para engajar pessoas e equipes na causa ambiental.",
+        "icon": "Leaf",
+        "image": {
+          "src": "/images/solucao-educacao-ambiental.jpg",
+          "alt": "Crianças participando de atividade prática de educação ambiental e plantio.",
+          "objectPosition": "50% 52%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        },
+        "intro": [
+          "Educação ambiental, para nós, não é uma ação isolada nem uma palestra que termina quando o encontro acaba. É um processo de sensibilização, aprendizagem e mudança de comportamento, capaz de aproximar pessoas dos desafios do seu território e transformá-las em parte da solução.",
+          "Nossa metodologia nasce da experiência prática com reciclagem, cooperativismo, mobilização comunitária, formação de equipes e gestão de resíduos. Por isso, conectamos informação à realidade: mostramos de onde vêm os resíduos, para onde vão, quem trabalha nessa cadeia e como escolhas aparentemente simples podem gerar impactos ambientais, sociais e econômicos.",
+          "Desenvolvemos ações para escolas, empresas, comunidades, cooperativas, instituições, órgãos públicos e eventos, adaptando linguagem, metodologia e atividades a cada público."
+        ],
+        "actions": [
+          "Palestras, oficinas e rodas de conversa, com linguagem acessível e conteúdos conectados ao cotidiano.",
+          "Formação de crianças, adolescentes, jovens, educadores, trabalhadores e lideranças, fortalecendo consciência ambiental e cidadania.",
+          "Capacitação de equipes operacionais, contribuindo para que a separação dos resíduos aconteça corretamente na prática.",
+          "Formação de multiplicadores e agentes ambientais, para que o conhecimento continue circulando depois das atividades.",
+          "Campanhas de mobilização e sensibilização, apoiando programas de coleta seletiva, logística reversa e iniciativas Lixo Zero.",
+          "Vivências práticas, como compostagem, hortas, jardinagem, mutirões, atividades na natureza e transformação criativa de materiais."
+        ],
+        "actingNote": [
+          "Mais do que ensinar onde colocar cada resíduo, buscamos desenvolver uma nova percepção: aquilo que muitas vezes é tratado como lixo pode ser matéria-prima, trabalho, renda, aprendizagem e oportunidade.",
+          "Quando uma criança compreende o valor do território, uma empresa melhora seus processos, uma comunidade começa a separar seus resíduos ou uma cooperativa é reconhecida como parte da solução, a educação ambiental deixa de ser discurso e passa a produzir transformação."
+        ],
+        "detailImage": {
+          "src": "/images/projeto-educacao-ambiental.jpg",
+          "alt": "Crianças participando de oficina de reciclagem com materiais reaproveitáveis.",
+          "objectPosition": "48% 50%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        },
+        "socialHeading": "Educação que conecta pessoas, território e futuro",
+        "impactoSocial": [
+          "Nossa experiência demonstra que equipamentos e lixeiras, sozinhos, não constroem uma cultura sustentável. A transformação acontece quando as pessoas compreendem por que mudar, como participar e quem é beneficiado por essa mudança.",
+          "É essa consciência que buscamos construir."
+        ],
+        "cta": "Quer desenvolver uma ação de educação ambiental em sua escola, empresa, comunidade ou instituição? Vamos construir essa transformação juntos."
+      },
+      {
+        "title": "Inclusão Produtiva e Economia Circular",
+        "subtitle": "Onde alguns enxergam descarte, nós enxergamos matéria-prima, criatividade e oportunidade.",
+        "description": "Reuso, reparo e transformação criativa que conectam circularidade a trabalho, renda e desenvolvimento territorial.",
+        "icon": "Users",
+        "image": {
+          "src": "/images/reserva-impacto-trabalho-cooperativo.jpg",
+          "alt": "Trabalhadora sorrindo durante separação de materiais recicláveis.",
+          "objectPosition": "58% 50%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        },
+        "intro": [
+          "A economia circular propõe uma mudança simples e profunda: substituir a lógica de extrair, consumir e descartar por sistemas capazes de reduzir desperdícios, reaproveitar materiais e prolongar sua permanência nos ciclos produtivos.",
+          "Nossa experiência com reciclagem, cooperativismo e desenvolvimento territorial acrescenta uma dimensão essencial a esse conceito: a circularidade dos materiais também pode movimentar pessoas, conhecimento, trabalho e renda.",
+          "Por isso, articulamos economia circular e criatividade para transformar resíduos em novos recursos e aproximar empresas, comunidades, cooperativas, artesãos, empreendedores, educadores e organizações."
+        ],
+        "sections": [
+          {
+            "heading": "Da matéria-prima à oportunidade",
+            "intro": [
+              "Materiais que perderam sua função original podem assumir novos significados por meio do reuso, reparo, reciclagem, compostagem, artesanato e transformação criativa.",
+              "Essa lógica pode gerar:"
+            ],
+            "items": [
+              "produtos e peças produzidos a partir de materiais reaproveitados;",
+              "artesanato e design sustentável;",
+              "transformação de madeira, plástico, PET, tecidos e outros resíduos;",
+              "reaproveitamento de óleo vegetal em novos produtos;",
+              "compostagem e utilização do composto em hortas e cultivos;",
+              "oficinas de produção e aprendizagem;",
+              "formação de empreendedores e agentes ambientais;",
+              "fortalecimento de cooperativas e iniciativas locais;",
+              "logística reversa conectada a cadeias produtivas;",
+              "geração de trabalho e renda a partir de materiais recuperados."
+            ]
+          },
+          {
+            "heading": "Circularidade que inclui pessoas",
+            "paragraphs": [
+              "Nossa proposta não termina quando um resíduo volta para a indústria.",
+              "Buscamos construir ciclos em que o valor econômico do material permaneça também nos territórios e alcance quem participa da transformação.",
+              "Isso significa aproximar quem gera o resíduo de quem pode recuperá-lo, transformá-lo ou utilizá-lo como matéria-prima. Significa ainda criar oportunidades para cooperativas, artesãos, empreendedores comunitários, jovens e pessoas que encontram no trabalho uma possibilidade concreta de autonomia.",
+              "A experiência acumulada no cooperativismo nos ensinou que uma cadeia circular se fortalece quando diferentes atores deixam de trabalhar isoladamente e passam a cooperar."
+            ]
+          },
+          {
+            "heading": "Criatividade também é tecnologia social",
+            "paragraphs": [
+              "Transformar uma garrafa, uma madeira descartada, uma peça de tecido, óleo usado ou matéria orgânica é importante. Mas o impacto se amplia quando essa transformação gera conhecimento, pertencimento, capacidades produtivas e novas possibilidades econômicas.",
+              "Por isso, nossas iniciativas podem integrar oficinas, espaços de experimentação, formação, produção artesanal, compostagem, agricultura urbana, reciclagem criativa e articulação comercial.",
+              "Queremos ajudar a construir territórios onde materiais circulem por mais tempo, recursos sejam utilizados com inteligência e mais pessoas possam participar da economia verde."
+            ]
+          },
+          {
+            "heading": "Empresas, organizações e pessoas podem fazer parte desse ciclo",
+            "paragraphs": [
+              "Uma empresa pode destinar materiais. Uma escola pode formar multiplicadores. Uma cooperativa pode realizar triagem e beneficiamento. Um artesão pode transformar. Um território pode produzir. Um parceiro pode financiar, contratar, doar conhecimento, equipamentos ou infraestrutura.",
+              "Economia circular acontece quando essas pontas se encontram."
+            ]
+          }
+        ],
+        "detailImage": {
+          "src": "/images/projeto-comunidade-reuso.jpg",
+          "alt": "Pessoas em oficina comunitária pintando pneus para reaproveitamento em espaço coletivo.",
+          "objectPosition": "55% 58%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        },
+        "cta": [
+          "Se você representa uma empresa, organização, poder público, cooperativa, instituição de ensino ou iniciativa social, existe espaço para construir essa transformação conosco.",
+          "Vamos transformar resíduos em recursos, criatividade em oportunidade e cooperação em impacto."
+        ]
+      }
+    ]
+  },
+  "processo": {
+    "title": "Como Trabalhamos",
+    "image": "/images/processo-triagem-residuos.jpg",
+    "steps": [
+      "Diagnóstico",
+      "Planejamento",
+      "Mobilização",
+      "Coleta e triagem",
+      "Destinação legal",
+      "Relatório de impacto"
+    ]
+  },
+  "projetos": {
+    "heading": "Projetos",
+    "subheading": "Frentes e experiências de atuação que conectam reciclagem, educação ambiental, mobilização territorial, eventos e fortalecimento de redes.",
+    "cta": {
+      "title": "Quer construir um projeto com a gente?",
+      "label": "Fale com a gente"
+    },
+    "items": [
+      {
+        "title": "Organização produtiva",
+        "description": "Estruturação de bases comunitárias para trabalho, triagem e cooperação.",
+        "image": {
+          "src": "/images/projeto-comunidade-reuso.jpg",
+          "alt": "Pessoas em oficina comunitária pintando pneus para reaproveitamento em espaço coletivo.",
+          "objectPosition": "55% 58%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        }
+      },
+      {
+        "title": "Redes cooperativas",
+        "description": "Articulação de lideranças e grupos para fortalecer cadeias de reciclagem.",
+        "image": {
+          "src": "/images/reserva-impacto-trabalho-cooperativo.jpg",
+          "alt": "Trabalhadora sorrindo durante separação de materiais recicláveis.",
+          "objectPosition": "58% 50%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        }
+      },
+      {
+        "title": "Mobilização de catadores",
+        "description": "Valorização de trabalhadores da reciclagem e defesa de trabalho digno.",
+        "image": {
+          "src": "/images/reserva-impacto-agente-reciclagem.jpg",
+          "alt": "Agente de reciclagem manuseando sacos com garrafas plásticas.",
+          "objectPosition": "47% 56%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        }
+      },
+      {
+        "title": "Operações em eventos",
+        "description": "Planejamento de triagem e educação ambiental em ambientes de grande circulação.",
+        "image": {
+          "src": "/images/projeto-evento-sustentavel.jpg",
+          "alt": "Tambores de coleta seletiva em evento com sinalização de recicláveis e orgânicos.",
+          "objectPosition": "50% 48%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        }
+      },
+      {
+        "title": "Educação para grandes públicos",
+        "description": "Ações de sensibilização para reduzir descarte e ampliar participação.",
+        "image": {
+          "src": "/images/solucao-eventos-sustentaveis.jpg",
+          "alt": "Profissional de limpeza atuando em área de evento com resíduos espalhados no gramado.",
+          "objectPosition": "36% 55%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        }
+      },
+      {
+        "title": "Legado socioambiental",
+        "description": "Organização de processos que conectam evento, território e responsabilidade compartilhada.",
+        "image": {
+          "src": "/images/solucao-eventos-sustentaveis.jpg",
+          "alt": "Profissional de limpeza atuando em área de evento com resíduos espalhados no gramado.",
+          "objectPosition": "36% 55%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        }
+      },
+      {
+        "title": "Áreas sensíveis",
+        "description": "Atenção a pontos de descarte irregular e fluxos de destinação responsável.",
+        "image": {
+          "src": "/images/problema-residuo-urbano.jpg",
+          "alt": "Resíduos acumulados em área urbana representando descarte irregular.",
+          "objectPosition": "52% 58%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        }
+      },
+      {
+        "title": "Fortalecimento cooperativo",
+        "description": "Apoio à organização econômica e institucional de grupos da cadeia da reciclagem.",
+        "image": {
+          "src": "/images/reserva-impacto-trabalho-cooperativo.jpg",
+          "alt": "Trabalhadora sorrindo durante separação de materiais recicláveis.",
+          "objectPosition": "58% 50%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        }
+      },
+      {
+        "title": "Articulação urbana",
+        "description": "Conexão entre território, instituições e agendas ambientais locais.",
+        "image": {
+          "src": "/images/projeto-territorio-comunidade.jpg",
+          "alt": "Vista de comunidade urbana em morro com quadra e moradias.",
+          "objectPosition": "50% 48%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        }
+      },
+      {
+        "title": "Gestão aplicada de resíduos",
+        "description": "Uso de processo, registro e inteligência operacional para qualificar decisões.",
+        "image": {
+          "src": "/images/solucao-consultoria-formacao.jpg",
+          "alt": "Palestra com público em auditório representando formação e consultoria socioambiental.",
+          "objectPosition": "50% 46%",
+          "aspect": "4 / 3",
+          "badge": "Imagem provisória",
+          "loading": "lazy"
+        }
+      }
+    ]
+  },
+  "parceiros": {
+    "heading": "Parceiros",
+    "subheading": "Construímos nossa atuação em rede, conectando organizações, iniciativas e parceiros que contribuem para ampliar conhecimento, estrutura e capacidade de realização.",
+    "items": [
+      {
+        "name": "Bizarte",
+        "logo": "/images/parceiros/bizarte.png"
+      },
+      {
+        "name": "Hub Bossa Nova 3",
+        "logo": "/images/parceiros/bossa-nova-hub-3.jpeg"
+      },
+      {
+        "name": "InovaiLab"
+      },
+      {
+        "name": "Incubadora Beco Rocinha",
+        "logo": "/images/parceiros/beco-incubadora.jpeg"
+      },
+      {
+        "name": "Incubadora da FAPERJ Rocinha"
+      },
+      {
+        "name": "Frutear",
+        "logo": "/images/parceiros/frutear.png"
+      },
+      {
+        "name": "OSC - Núcleo de Convivências",
+        "logo": "/images/parceiros/nucleo-convivencias.jpeg"
+      }
+    ]
+  },
+  "contato": {
+    "title": "Contato",
+    "intro": "Quer desenvolver uma ação, projeto ou parceria? Conte um pouco sobre o que você precisa.",
+    "ctaLabel": "Entrar em contato",
+    "sendingLabel": "Enviando...",
+    "successMessage": "Mensagem enviada com sucesso. Obrigado pelo contato.",
+    "fields": {
+      "name": "Nome",
+      "email": "E-mail",
+      "organization": "Organização",
+      "phone": "Telefone",
+      "subject": "Assunto",
+      "message": "Mensagem"
+    },
+    "subjects": [
+      "Gestão de Resíduos",
+      "Educação Ambiental",
+      "Inclusão Produtiva e Economia Circular",
+      "Projetos e Parcerias",
+      "Outro"
+    ]
+  },
+  "footer": {
+    "message": "Resíduo, processo, transformação, impacto e parceria: esse é o caminho da Eu Quero Liberdade."
+  }
+}
