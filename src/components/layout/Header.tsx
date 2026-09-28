@@ -2,6 +2,7 @@ import { Menu, Recycle } from 'lucide-react'
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { siteContent } from '../../content/site'
+import { usePublishedSection } from '../../content/publicContentContext'
 
 const headerNav = [
   { label: 'Home', to: '/' },
@@ -18,13 +19,17 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
 
 export function Header() {
   const [open, setOpen] = useState(false)
+  // Marca vem do CMS quando `home` publicado existe; senao permanece estatica.
+  // Assim Header, Hero e Footer nunca divergem entre si.
+  const home = usePublishedSection('home')
+  const brand = home?.brand ?? siteContent.brand
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#D9E2D0] bg-[#F7F3E8]/95 shadow-[0_8px_28px_-24px_rgba(15,23,42,0.65)] backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-3 md:px-8 lg:py-3.5">
         <Link to="/" className="inline-flex items-center gap-2 text-[#111827]" onClick={() => setOpen(false)}>
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#14532D] text-white shadow-sm"><Recycle size={18} /></span>
-          <span className="text-xs font-semibold uppercase tracking-[0.14em] sm:text-sm">{siteContent.brand}</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.14em] sm:text-sm">{brand}</span>
         </Link>
 
         <button type="button" className="inline-flex rounded-lg border border-[#D9E2D0] bg-white p-2 text-[#0F3A5F] shadow-sm transition hover:border-[#D97706] hover:text-[#D97706] md:hidden" onClick={() => setOpen((value) => !value)} aria-label={open ? 'Fechar menu' : 'Abrir menu'} aria-expanded={open}>

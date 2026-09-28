@@ -18,7 +18,7 @@ import {
   toProjetosPageContent,
   toQuemSomosContent,
   toSolucoesContent,
-} from '../components/admin/content/previewAdapters'
+} from '../content/contentAdapters'
 import { getContentSectionMeta } from '../components/admin/content/sections'
 import type {
   ContatoContent,

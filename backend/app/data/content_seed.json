@@ -275,7 +275,11 @@
   },
   "projetos": {
     "heading": "Projetos",
-    "subheading": "Frentes e experiências de atuação que conectam reciclagem, educação ambiental, mobilização territorial, eventos e fortalecimento de redes.",
+    "subheading": "Conheça iniciativas, experiências e conexões construídas a partir da atuação da Eu Quero Liberdade.",
+    "timeline": {
+      "heading": "Projetos",
+      "subheading": "Frentes e experiências de atuação que conectam reciclagem, educação ambiental, mobilização territorial, eventos e fortalecimento de redes."
+    },
     "cta": {
       "title": "Quer construir um projeto com a gente?",
       "label": "Fale com a gente"

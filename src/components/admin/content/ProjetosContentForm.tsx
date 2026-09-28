@@ -7,6 +7,7 @@ export function ProjetosContentForm({
   disabled,
 }: ContentFormProps<ProjetosContent>) {
   const cta = value.cta
+  const timeline = value.timeline ?? {}
 
   return (
     <div className="space-y-6">
@@ -15,17 +16,40 @@ export function ProjetosContentForm({
         description="Textos exibidos no topo da página de projetos."
       >
         <TextField
-          label="Título"
+          label="Título da página"
           value={value.heading}
           disabled={disabled}
           onChange={(heading) => onChange({ ...value, heading })}
         />
         <TextAreaField
-          label="Introdução"
+          label="Introdução da página"
           value={value.subheading}
           rows={3}
           disabled={disabled}
           onChange={(subheading) => onChange({ ...value, subheading })}
+        />
+      </FormSection>
+
+      <FormSection
+        title="Seção de projetos"
+        description="Título e texto introdutório exibidos acima da lista de projetos. São textos diferentes do cabeçalho da página."
+      >
+        <TextField
+          label="Título da seção"
+          value={timeline.heading ?? ''}
+          hint="Deixe em branco para manter o título atual do site."
+          disabled={disabled}
+          onChange={(heading) => onChange({ ...value, timeline: { ...timeline, heading } })}
+        />
+        <TextAreaField
+          label="Texto introdutório da seção"
+          value={timeline.subheading ?? ''}
+          rows={3}
+          hint="Deixe em branco para manter o texto atual do site."
+          disabled={disabled}
+          onChange={(subheading) =>
+            onChange({ ...value, timeline: { ...timeline, subheading } })
+          }
         />
       </FormSection>
 

@@ -34,7 +34,7 @@ export const ADMIN_CONTENT_SECTIONS: AdminContentSectionMeta[] = [
   {
     key: 'projetos',
     name: 'Projetos',
-    description: 'Projetos exibidos na página, com imagens e chamada final.',
+    description: 'Textos da página, da seção de projetos e a lista com imagens e chamada final.',
   },
   {
     key: 'parceiros',

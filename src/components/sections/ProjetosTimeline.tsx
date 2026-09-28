@@ -20,14 +20,25 @@ export interface ProjetosTimelineItem {
 }
 
 /**
- * Itens da timeline vindos do CMS (draft_data de `projetos`).
+ * Conteudo da timeline (draft_data de `projetos` ou `published_data` publicado).
  *
- * O titulo e o subtitulo internos desta secao NAO existem no CMS (sao conteudo fixo do
- * componente) e por isso continuam estaticos — o preview preserva exatamente isso.
+ * Os textos proprios DESTA secao (`heading`/`subheading`) sao distintos do titulo e
+ * da introducao da pagina, por isso trafegam em `projetos.timeline`. Ambos sao
+ * opcionais: sem eles o componente mantem os textos fixos originais.
  */
 export interface ProjetosTimelineContent {
+  heading?: string
+  subheading?: string
   items: ProjetosTimelineItem[]
 }
+
+/**
+ * Textos fixos originais desta secao — fallback quando o CMS nao fornece
+ * `heading`/`subheading`. Preservados para manter o site atual identico.
+ */
+const TIMELINE_HEADING = 'Projetos'
+const TIMELINE_SUBHEADING =
+  'Frentes e experi\u00eancias de atua\u00e7\u00e3o que conectam reciclagem, educa\u00e7\u00e3o ambiental, mobiliza\u00e7\u00e3o territorial, eventos e fortalecimento de redes.'
 
 interface ProjetosTimelineProps {
   content?: ProjetosTimelineContent
@@ -58,6 +69,8 @@ function ProjectCard({ projeto, index }: ProjectCardProps) {
 
 export function ProjetosTimeline({ content }: ProjetosTimelineProps) {
   const items = content?.items ?? projetosContent
+  const heading = content?.heading ?? TIMELINE_HEADING
+  const subheading = content?.subheading ?? TIMELINE_SUBHEADING
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     loop: false,
@@ -72,10 +85,10 @@ export function ProjetosTimeline({ content }: ProjetosTimelineProps) {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="max-w-3xl">
           <h2 className="text-balance text-3xl font-semibold tracking-normal text-[#111827] md:text-4xl">
-            {'Projetos'}
+            {heading}
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#374151] md:text-base">
-            {'Frentes e experi\u00eancias de atua\u00e7\u00e3o que conectam reciclagem, educa\u00e7\u00e3o ambiental, mobiliza\u00e7\u00e3o territorial, eventos e fortalecimento de redes.'}
+            {subheading}
           </p>
         </div>
         <div className="flex gap-2">

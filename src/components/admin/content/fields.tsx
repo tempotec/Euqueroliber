@@ -2,7 +2,7 @@ import { useId, useState } from 'react'
 import type { ReactNode } from 'react'
 import { ArrowDown, ArrowUp, Plus, Trash2 } from 'lucide-react'
 import { appendAt, moveAt, removeAt, replaceAt } from './arrayUtils'
-import { resolveAssetPreview } from './assetUrl'
+import { resolveAssetPreview } from '../../../lib/assetUrl'
 import { cardClass, controlClass, hintClass, labelClass, smallButtonClass } from './styles'
 
 interface FieldShellProps {

@@ -37,6 +37,12 @@ jobs:
         run: npm ci
 
       - name: Build project
+        # `VITE_API_URL` e uma URL PUBLICA (nao e segredo). Configure em:
+        # Settings > Secrets and variables > Actions > Variables > New variable.
+        # Se a variavel nao existir, o build segue normal e o site usa o
+        # conteudo estatico dos `.ts` — nunca tenta alcancar localhost.
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
         run: npm run build
 
       - name: Configure GitHub Pages

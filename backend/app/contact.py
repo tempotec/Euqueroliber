@@ -1,3 +1,6 @@
+from sqlalchemy.exc import SQLAlchemyError
+
+from .contents import get_section
 from .extensions import db
 from .models import ContactMessage
 
@@ -8,6 +11,8 @@ CONTACT_SUBJECTS = {
     "Projetos e Parcerias",
     "Outro",
 }
+
+CONTACT_CONTENT_KEY = "contato"
 
 LIMITS = {
     "name": 120,
@@ -64,6 +69,37 @@ def is_valid_email(email: str) -> bool:
     return True
 
 
+def resolve_allowed_subjects() -> set[str]:
+    """Assuntos aceitos pelo formulario de contato.
+
+    Fonte preferencial: `published_data` da secao `contato` do CMS, para que o
+    administrador possa publicar novos assuntos sem alterar codigo.
+
+    NUNCA usa `draft_data`: o visitante so pode escolher o que foi publicado.
+
+    Fallback: lista padrao em `CONTACT_SUBJECTS` quando a secao nao existe,
+    esta vazia, tem formato inesperado ou o banco nao responde. Isso preserva o
+    comportamento anterior em ambientes sem o CMS migrado.
+    """
+    try:
+        section = get_section(CONTACT_CONTENT_KEY)
+    except SQLAlchemyError:
+        return set(CONTACT_SUBJECTS)
+
+    if section is None:
+        return set(CONTACT_SUBJECTS)
+
+    published = section.published_data
+    raw_subjects = published.get("subjects") if isinstance(published, dict) else None
+
+    if not isinstance(raw_subjects, list):
+        return set(CONTACT_SUBJECTS)
+
+    cleaned = {item.strip() for item in raw_subjects if isinstance(item, str) and item.strip()}
+
+    return cleaned or set(CONTACT_SUBJECTS)
+
+
 def build_contact_message(payload: dict) -> ContactMessage:
     if not isinstance(payload, dict):
         raise ContactValidationError("Corpo da requisição inválido.")
@@ -76,7 +112,7 @@ def build_contact_message(payload: dict) -> ContactMessage:
     if not is_valid_email(email):
         raise ContactValidationError("Informe um e-mail válido.")
 
-    if subject not in CONTACT_SUBJECTS:
+    if subject not in resolve_allowed_subjects():
         raise ContactValidationError("Assunto inválido.")
 
     organization = _clean_optional(payload.get("organization"))

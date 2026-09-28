@@ -1,18 +1,19 @@
-import type { InstitutionalImage } from '../../../content/homeImages'
-import { homeImages } from '../../../content/homeImages'
-import { resolveAssetPreview } from './assetUrl'
-import { parceiros } from '../../../content/parceiros'
-import { projetosContent } from '../../../content/projetos'
-import { solucoesContent, type SolutionContent } from '../../../content/solucoes'
-import type { ParceirosPageContent } from '../../../pages/ParceirosPage'
-import type { ProjetosPageContent } from '../../../pages/ProjetosClientesPage'
-import type { ContatoSectionContent } from '../../sections/Contato'
-import type { HeroSectionContent } from '../../sections/Hero'
-import type { ProcessoSectionContent } from '../../sections/ComoTrabalhamos'
-import type { ProjetosTimelineContent } from '../../sections/ProjetosTimeline'
-import type { QuemSomosSectionContent } from '../../sections/QuemSomos'
-import type { SolucoesSectionContent } from '../../sections/Solucoes'
-import type { FooterSectionContent } from '../../layout/Footer'
+import type { ContentSectionKey } from '../lib/api'
+import type { InstitutionalImage } from './homeImages'
+import { homeImages } from './homeImages'
+import { resolveAssetPreview } from '../lib/assetUrl'
+import { parceiros } from './parceiros'
+import { projetosContent } from './projetos'
+import { solucoesContent, type SolutionContent } from './solucoes'
+import type { ParceirosPageContent } from '../pages/ParceirosPage'
+import type { ProjetosPageContent } from '../pages/ProjetosClientesPage'
+import type { ContatoSectionContent } from '../components/sections/Contato'
+import type { HeroSectionContent } from '../components/sections/Hero'
+import type { ProcessoSectionContent } from '../components/sections/ComoTrabalhamos'
+import type { ProjetosTimelineContent } from '../components/sections/ProjetosTimeline'
+import type { QuemSomosSectionContent } from '../components/sections/QuemSomos'
+import type { SolucoesSectionContent } from '../components/sections/Solucoes'
+import type { FooterSectionContent } from '../components/layout/Footer'
 import type {
   ContentImage,
   ContatoContent,
@@ -220,6 +221,10 @@ export function toProcessoContent(draft: ProcessoContent): ProcessoSectionConten
 
 export function toProjetosPageContent(draft: ProjetosContent): ProjetosPageContent {
   const timeline: ProjetosTimelineContent = {
+    // Textos proprios da secao de projetos. Sao opcionais no contrato: quando
+    // ausentes, o proprio componente mantem os textos fixos originais.
+    heading: draft.timeline?.heading,
+    subheading: draft.timeline?.subheading,
     items: (draft.items ?? []).map((item, index) => {
       const baseItem = projetosContent[index]
 
@@ -284,4 +289,72 @@ export function toContatoContent(draft: ContatoContent): ContatoSectionContent {
 export function toFooterContent(draft: FooterContent): FooterSectionContent {
   // Apenas `message`. Copyright/ano continuam dinamicos a partir de site.ts.
   return { message: draft.message }
+}
+
+/* ==================================================================== *
+ * Leitura PUBLICA — normalizacao defensiva do `published_data`
+ *
+ * O site publico recebe JSON nao confiavel da API. Estes helpers validam o
+ * minimo necessario e delegam aos MESMOS adapters usados pelo preview admin,
+ * garantindo que publico e administrativo nao divirjam de comportamento.
+ * ==================================================================== */
+
+export type PublicAdaptedContent = {
+  home: HeroSectionContent
+  quem_somos: QuemSomosSectionContent
+  solucoes: SolucoesSectionContent
+  processo: ProcessoSectionContent
+  projetos: ProjetosPageContent
+  parceiros: ParceirosPageContent
+  contato: ContatoSectionContent
+  footer: FooterSectionContent
+}
+
+/**
+ * Campos minimos exigidos para considerar o `published_data` de uma secao
+ * utilizavel. Se faltar algum, a secao cai no fallback estatico — sem
+ * derrubar o restante do site.
+ */
+const SECTION_REQUIRED_FIELDS: { [K in ContentSectionKey]: readonly string[] } = {
+  home: ['brand', 'hero'],
+  quem_somos: ['title', 'historia'],
+  solucoes: ['items'],
+  processo: ['title', 'steps'],
+  projetos: ['items'],
+  parceiros: ['items'],
+  contato: ['title', 'subjects'],
+  footer: ['message'],
+}
+
+/**
+ * Unico ponto de conversao entre o formato generico da API e os shapes tipados.
+ * O cast e seguro porque `adaptPublishedContent` valida os campos obrigatorios
+ * antes de chamar o adapter — e qualquer falha e capturada pelo consumidor.
+ */
+const PUBLIC_ADAPTERS = {
+  home: toHeroContent,
+  quem_somos: toQuemSomosContent,
+  solucoes: toSolucoesContent,
+  processo: toProcessoContent,
+  projetos: toProjetosPageContent,
+  parceiros: toParceirosPageContent,
+  contato: toContatoContent,
+  footer: toFooterContent,
+} as unknown as { [K in ContentSectionKey]: (draft: unknown) => PublicAdaptedContent[K] }
+
+/**
+ * Converte `published_data` de uma secao nas props do componente real do site.
+ * Lanca erro quando o shape e inesperado — quem chama decide o fallback.
+ */
+export function adaptPublishedContent<K extends ContentSectionKey>(
+  key: K,
+  data: Record<string, unknown>,
+): PublicAdaptedContent[K] {
+  for (const field of SECTION_REQUIRED_FIELDS[key]) {
+    if (!(field in data)) {
+      throw new Error(`campo obrigatorio ausente em "${key}": ${field}`)
+    }
+  }
+
+  return PUBLIC_ADAPTERS[key](data)
 }

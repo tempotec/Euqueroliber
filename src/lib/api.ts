@@ -28,6 +28,32 @@ function normalizeApiUrl(value: string | undefined) {
 
 export const apiBaseUrl = normalizeApiUrl(import.meta.env.VITE_API_URL)
 
+/**
+ * Base URL exclusiva do conteudo publico do CMS.
+ *
+ * - Com `VITE_API_URL` configurada: usa a mesma base do restante da aplicacao.
+ * - Sem `VITE_API_URL` em desenvolvimento: usa localhost (conveniencia local).
+ * - Sem `VITE_API_URL` em producao: `undefined` — CMS publico DESABILITADO.
+ *   O site NUNCA deve tentar alcancar o localhost do visitante.
+ *
+ * `apiBaseUrl` permanece intacta para Admin/Publicacoes: nenhum contrato
+ * existente muda de comportamento.
+ */
+export function derivePublicCmsBaseUrl(
+  rawValue: string | undefined,
+  isDev: boolean,
+  fallback: string = DEFAULT_API_URL,
+): string | undefined {
+  const explicit = rawValue?.trim()
+  if (explicit) return explicit.endsWith('/') ? explicit.slice(0, -1) : explicit
+  return isDev ? fallback : undefined
+}
+
+export const publicCmsBaseUrl = derivePublicCmsBaseUrl(
+  import.meta.env.VITE_API_URL,
+  import.meta.env.DEV,
+)
+
 async function apiRequest<T>(path: string, options: ApiRequestOptions = {}) {
   const { body, ...requestOptions } = options
   const headers = new Headers(options.headers)
@@ -259,4 +285,70 @@ export async function revertAdminContent(key: string) {
     `/api/v1/admin/content/${encodeURIComponent(key)}/revert`,
     { method: 'POST' },
   )
+}
+
+/* ------------------------------------------------------------------ *
+ * CMS institucional — leitura PUBLICA
+ *
+ * Le somente `/api/v1/content`, que devolve exclusivamente `published_data`.
+ * Nunca usa `/api/v1/admin/content` e nunca envia cookie de sessao.
+ * ------------------------------------------------------------------ */
+
+export type PublicContentSection = {
+  key: string
+  data: ContentData
+  published_at: string | null
+}
+
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+/**
+ * GET /api/v1/content — publico, sem credenciais.
+ *
+ * Retorna `[]` quando o CMS publico esta desabilitado (producao sem
+ * `VITE_API_URL`), o que faz o site usar o conteudo estatico dos `.ts`.
+ */
+export async function getPublicContentSections(
+  signal?: AbortSignal,
+): Promise<PublicContentSection[]> {
+  if (!publicCmsBaseUrl) return []
+
+  let response: Response
+
+  try {
+    response = await fetch(`${publicCmsBaseUrl}/api/v1/content`, {
+      method: 'GET',
+      credentials: 'omit',
+      headers: { Accept: 'application/json' },
+      signal,
+    })
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') throw error
+    throw new ApiError('Nao foi possivel conectar ao servidor.', 'server_unavailable')
+  }
+
+  if (!response.ok) {
+    throw new ApiError('Request failed.', 'request_failed', response.status)
+  }
+
+  const payload: unknown = await response.json()
+  const rawSections = isPlainObject(payload) ? payload.sections : undefined
+
+  if (!Array.isArray(rawSections)) return []
+
+  return rawSections.flatMap((item) => {
+    if (!isPlainObject(item)) return []
+    if (typeof item.key !== 'string') return []
+    if (!isPlainObject(item.data)) return []
+
+    return [
+      {
+        key: item.key,
+        data: item.data,
+        published_at: typeof item.published_at === 'string' ? item.published_at : null,
+      },
+    ]
+  })
 }
