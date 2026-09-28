@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getPublicPublications, type PublicPublication } from '../lib/api'
+import { ApiError, getPublicPublications, type PublicPublication } from '../lib/api'
+import { PublicationCover } from '../components/ui/PublicationCover'
 
 function formatDate(iso: string | null | undefined): string {
   if (!iso) return ''
@@ -16,20 +17,34 @@ function formatDate(iso: string | null | undefined): string {
   }
 }
 
+type LoadError = 'unavailable' | 'failed'
+
 export function PublicacoesPage() {
   const [items, setItems] = useState<PublicPublication[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [hasError, setHasError] = useState(false)
+  const [loadError, setLoadError] = useState<LoadError | null>(null)
 
   useEffect(() => {
+    const controller = new AbortController()
     let active = true
 
-    getPublicPublications()
+    getPublicPublications(controller.signal)
       .then((data) => {
         if (active) setItems(data.items ?? [])
       })
-      .catch(() => {
-        if (active) setHasError(true)
+      .catch((error: unknown) => {
+        if (!active) return
+        if (error instanceof DOMException && error.name === 'AbortError') return
+
+        const code = error instanceof ApiError ? error.code : 'request_failed'
+
+        // API nao configurada e backend fora do ar sao indisponibilidade —
+        // o visitante recebe mensagem amigavel, nunca detalhe tecnico.
+        setLoadError(
+          code === 'api_not_configured' || code === 'server_unavailable'
+            ? 'unavailable'
+            : 'failed',
+        )
       })
       .finally(() => {
         if (active) setIsLoading(false)
@@ -37,6 +52,7 @@ export function PublicacoesPage() {
 
     return () => {
       active = false
+      controller.abort()
     }
   }, [])
 
@@ -73,13 +89,17 @@ export function PublicacoesPage() {
                 </div>
               ))}
             </div>
-          ) : hasError ? (
+          ) : loadError ? (
             <div className="rounded-[2rem] border border-[var(--border)] bg-white/88 px-8 py-16 text-center shadow-[0_24px_90px_rgba(8,47,73,0.08)]">
               <p className="text-lg font-medium text-[#374151]">
-                Não foi possível carregar as publicações agora.
+                {loadError === 'unavailable'
+                  ? 'Publicações temporariamente indisponíveis.'
+                  : 'Não foi possível carregar as publicações agora.'}
               </p>
               <p className="mt-2 text-sm text-[var(--muted)]">
-                Tente novamente em instantes.
+                {loadError === 'unavailable'
+                  ? 'Estamos trabalhando para restabelecer o conteúdo. Tente novamente mais tarde.'
+                  : 'Tente novamente em instantes.'}
               </p>
             </div>
           ) : items.length === 0 ? (
@@ -99,22 +119,11 @@ export function PublicacoesPage() {
                   to={`/publicacoes/${publication.slug}`}
                   className="group flex flex-col overflow-hidden rounded-[2rem] border border-[var(--border)] bg-white/88 shadow-[0_24px_90px_rgba(8,47,73,0.08)] transition hover:-translate-y-1 hover:shadow-[0_30px_110px_rgba(8,47,73,0.14)]"
                 >
-                  {publication.cover_image ? (
-                    <div className="aspect-[16/9] overflow-hidden">
-                      <img
-                        src={publication.cover_image}
-                        alt=""
-                        loading="lazy"
-                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex aspect-[16/9] items-center justify-center bg-[linear-gradient(135deg,_#0F3A5F,_#14532D)]">
-                      <span className="text-4xl font-semibold text-[#F2B705]">
-                        {publication.title.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                  )}
+                  <PublicationCover
+                    coverImage={publication.cover_image}
+                    title={publication.title}
+                    imageClassName="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
 
                   <div className="flex flex-1 flex-col px-6 py-6">
                     {publication.published_at && (

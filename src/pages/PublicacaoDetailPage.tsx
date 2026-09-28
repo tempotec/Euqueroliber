@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ApiError, getPublicPublication, type Publication } from '../lib/api'
+import { PublicationCover } from '../components/ui/PublicationCover'
 
 function formatDate(iso: string | null | undefined): string {
   if (!iso) return ''
@@ -19,26 +20,37 @@ function formatDate(iso: string | null | undefined): string {
 type ViewState =
   | { status: 'loading' }
   | { status: 'notfound' }
+  | { status: 'unavailable' }
   | { status: 'error' }
   | { status: 'ready'; publication: Publication }
 
 export function PublicacaoDetailPage() {
   const { slug } = useParams<{ slug: string }>()
-  const [view, setView] = useState<ViewState>({ status: 'loading' })
+  const [view, setView] = useState<ViewState>(() =>
+    slug ? { status: 'loading' } : { status: 'notfound' },
+  )
 
   useEffect(() => {
     if (!slug) return
 
+    const controller = new AbortController()
     let active = true
 
-    getPublicPublication(slug)
+    getPublicPublication(slug, controller.signal)
       .then((data) => {
         if (active) setView({ status: 'ready', publication: data })
       })
       .catch((reason: unknown) => {
         if (!active) return
-        if (reason instanceof ApiError && reason.code === 'not_found') {
+        if (reason instanceof DOMException && reason.name === 'AbortError') return
+
+        const code = reason instanceof ApiError ? reason.code : 'request_failed'
+
+        // 404 continua sendo conteudo inexistente — nunca falha de infraestrutura.
+        if (code === 'not_found') {
           setView({ status: 'notfound' })
+        } else if (code === 'api_not_configured' || code === 'server_unavailable') {
+          setView({ status: 'unavailable' })
         } else {
           setView({ status: 'error' })
         }
@@ -46,6 +58,7 @@ export function PublicacaoDetailPage() {
 
     return () => {
       active = false
+      controller.abort()
     }
   }, [slug])
 
@@ -79,6 +92,21 @@ export function PublicacaoDetailPage() {
           </div>
         )}
 
+        {view.status === 'unavailable' && (
+          <div className="mt-10 rounded-[2rem] border border-[var(--border)] bg-white/88 px-8 py-16 text-center shadow-[0_24px_90px_rgba(8,47,73,0.08)]">
+            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#D97706]">
+              Temporariamente indisponível
+            </p>
+            <h1 className="mt-4 text-2xl font-semibold text-[#111827]">
+              Publicações temporariamente indisponíveis
+            </h1>
+            <p className="mt-3 text-base text-[#374151]">
+              Estamos trabalhando para restabelecer o conteúdo. Tente novamente mais tarde ou volte
+              para a lista de publicações.
+            </p>
+          </div>
+        )}
+
         {view.status === 'error' && (
           <div className="mt-10 rounded-[2rem] border border-[var(--border)] bg-white/88 px-8 py-16 text-center shadow-[0_24px_90px_rgba(8,47,73,0.08)]">
             <p className="text-lg font-medium text-[#374151]">
@@ -92,15 +120,13 @@ export function PublicacaoDetailPage() {
 
         {view.status === 'ready' && (
           <article className="mt-10 overflow-hidden rounded-[2rem] border border-[var(--border)] bg-white/88 shadow-[0_24px_90px_rgba(8,47,73,0.08)]">
-            {view.publication.cover_image && (
-              <div className="aspect-[16/9] overflow-hidden">
-                <img
-                  src={view.publication.cover_image}
-                  alt=""
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            )}
+            <PublicationCover
+              coverImage={view.publication.cover_image}
+              title={view.publication.title}
+              imageClassName="h-full w-full object-cover"
+              imageLoading="eager"
+              emptyFallback="none"
+            />
 
             <div className="px-6 py-10 md:px-10">
               {view.publication.published_at && (

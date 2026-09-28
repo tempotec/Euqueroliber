@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react'
 
 import {
   getPublicContentSections,
-  publicCmsBaseUrl,
+  publicApiBaseUrl,
   type ContentData,
   type ContentSectionKey,
 } from '../lib/api'
@@ -60,7 +60,7 @@ export function PublicContentProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Producao sem VITE_API_URL: CMS desabilitado, sem tentar localhost.
-    if (!publicCmsBaseUrl) return
+    if (!publicApiBaseUrl) return
 
     let active = true
 

@@ -29,17 +29,17 @@ function normalizeApiUrl(value: string | undefined) {
 export const apiBaseUrl = normalizeApiUrl(import.meta.env.VITE_API_URL)
 
 /**
- * Base URL exclusiva do conteudo publico do CMS.
+ * Base URL de tudo que e PUBLICO no backend (CMS institucional + Publicacoes).
  *
  * - Com `VITE_API_URL` configurada: usa a mesma base do restante da aplicacao.
  * - Sem `VITE_API_URL` em desenvolvimento: usa localhost (conveniencia local).
- * - Sem `VITE_API_URL` em producao: `undefined` — CMS publico DESABILITADO.
+ * - Sem `VITE_API_URL` em producao: `undefined` — conteudo publico DESABILITADO.
  *   O site NUNCA deve tentar alcancar o localhost do visitante.
  *
- * `apiBaseUrl` permanece intacta para Admin/Publicacoes: nenhum contrato
- * existente muda de comportamento.
+ * `apiBaseUrl` permanece intacta para o Admin (login, sessao, CRUD): nenhum
+ * contrato existente muda de comportamento.
  */
-export function derivePublicCmsBaseUrl(
+export function derivePublicApiBaseUrl(
   rawValue: string | undefined,
   isDev: boolean,
   fallback: string = DEFAULT_API_URL,
@@ -49,7 +49,7 @@ export function derivePublicCmsBaseUrl(
   return isDev ? fallback : undefined
 }
 
-export const publicCmsBaseUrl = derivePublicCmsBaseUrl(
+export const publicApiBaseUrl = derivePublicApiBaseUrl(
   import.meta.env.VITE_API_URL,
   import.meta.env.DEV,
 )
@@ -198,16 +198,62 @@ export async function deletePublication(id: number | string) {
   })
 }
 
-export async function getPublicPublications() {
-  return apiRequest<{ items: PublicPublication[] }>('/api/v1/publications', {
-    method: 'GET',
-  })
+/* ------------------------------------------------------------------ *
+ * Leituras PUBLICAS de Publicacoes
+ *
+ * Nao dependem de sessao: `credentials: 'omit'` e base publica segura.
+ * Sao deliberadamente separadas de `/api/v1/admin/...` (que usa sessao).
+ * ------------------------------------------------------------------ */
+
+/**
+ * GET publico, sem credenciais e com base publica.
+ *
+ * Erros sao tipados por `ApiError.code` para a tela distinguir:
+ *   - `api_not_configured` — producao sem VITE_API_URL (nao tenta localhost)
+ *   - `server_unavailable` — rede/backend fora do ar
+ *   - `not_found`          — conteudo inexistente (404)
+ *   - `request_failed`     — demais respostas nao-2xx
+ */
+async function publicApiRequest<T>(path: string, signal?: AbortSignal): Promise<T> {
+  if (!publicApiBaseUrl) {
+    // Producao sem VITE_API_URL: nunca tentar o localhost do visitante.
+    throw new ApiError('Publicacoes temporariamente indisponiveis.', 'api_not_configured')
+  }
+
+  let response: Response
+
+  try {
+    response = await fetch(`${publicApiBaseUrl}${path}`, {
+      method: 'GET',
+      credentials: 'omit',
+      headers: { Accept: 'application/json' },
+      signal,
+    })
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') throw error
+    throw new ApiError('Nao foi possivel conectar ao servidor.', 'server_unavailable')
+  }
+
+  if (response.status === 404) {
+    throw new ApiError('Nao encontrado.', 'not_found', 404)
+  }
+
+  if (!response.ok) {
+    throw new ApiError('Request failed.', 'request_failed', response.status)
+  }
+
+  return (await response.json()) as T
 }
 
-export async function getPublicPublication(slug: string) {
-  return apiRequest<Publication>(`/api/v1/publications/${slug}`, {
-    method: 'GET',
-  })
+export async function getPublicPublications(signal?: AbortSignal) {
+  return publicApiRequest<{ items: PublicPublication[] }>('/api/v1/publications', signal)
+}
+
+export async function getPublicPublication(slug: string, signal?: AbortSignal) {
+  return publicApiRequest<Publication>(
+    `/api/v1/publications/${encodeURIComponent(slug)}`,
+    signal,
+  )
 }
 
 export type ContactPayload = {
@@ -313,12 +359,12 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 export async function getPublicContentSections(
   signal?: AbortSignal,
 ): Promise<PublicContentSection[]> {
-  if (!publicCmsBaseUrl) return []
+  if (!publicApiBaseUrl) return []
 
   let response: Response
 
   try {
-    response = await fetch(`${publicCmsBaseUrl}/api/v1/content`, {
+    response = await fetch(`${publicApiBaseUrl}/api/v1/content`, {
       method: 'GET',
       credentials: 'omit',
       headers: { Accept: 'application/json' },
