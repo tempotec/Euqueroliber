@@ -85,6 +85,16 @@ class Publication(db.Model):
         default=PUBLICATION_STATUS_DRAFT,
     )
     published_at = db.Column(db.DateTime(timezone=True), nullable=True)
+    # Edicao pendente de uma publicacao JA publicada.
+    #
+    # Semantica (Ticket 8):
+    #   - `None`                     -> nao ha alteracao pendente.
+    #   - dict (title/slug/summary/content/cover_image) -> alteracao pendente.
+    #
+    # As COLUNAS acima continuam sendo a VERSAO PUBLICA (nunca sao alteradas
+    # por um save de rascunho de publicacao publicada). Para publicacoes nunca
+    # publicadas, as colunas sao a fonte canonica e `draft_data` permanece None.
+    draft_data = db.Column(db.JSON, nullable=True)
     created_at = db.Column(
         db.DateTime(timezone=True),
         nullable=False,
@@ -96,6 +106,9 @@ class Publication(db.Model):
         default=utc_now,
         onupdate=utc_now,
     )
+
+    # Campos editoriais (a versao publica vive nas colunas de mesmo nome).
+    CONTENT_FIELDS = ("title", "slug", "summary", "content", "cover_image")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -127,7 +140,76 @@ class Publication(db.Model):
         else:
             self.published_at = None
 
-    def to_dict(self) -> dict[str, int | str | None]:
+    # ------------------------------------------------------------------
+    # Fluxo editorial (Ticket 8)
+    # ------------------------------------------------------------------
+
+    @property
+    def is_published(self) -> bool:
+        return self.status == PUBLICATION_STATUS_PUBLISHED
+
+    def public_snapshot(self) -> dict[str, object]:
+        """Versao PUBLICA atual, lida exclusivamente das colunas."""
+        return {field: getattr(self, field) for field in self.CONTENT_FIELDS}
+
+    def editor_data(self) -> dict[str, object]:
+        """O que o editor deve carregar: rascunho pendente, senao a versao publica."""
+        if self.draft_data:
+            return dict(self.draft_data)
+        return self.public_snapshot()
+
+    @property
+    def has_unpublished_changes(self) -> bool:
+        """True somente quando a publicacao esta publicada E existe rascunho pendente.
+
+        Publicacao nunca publicada nao tem "alteracoes pendentes": as colunas
+        sao a propria fonte canonica.
+        """
+        return bool(self.is_published and self.draft_data)
+
+    def save_pending_draft(self, data: dict[str, object]) -> None:
+        """Grava a edicao pendente SEM tocar na versao publica."""
+        self.draft_data = {field: data.get(field) for field in self.CONTENT_FIELDS}
+
+    def discard_pending_draft(self) -> None:
+        """Descarta a edicao pendente. A versao publica nunca e afetada."""
+        self.draft_data = None
+
+    def apply_pending_draft(self) -> None:
+        """Promove a edicao pendente para a versao publica e limpa o rascunho."""
+        if self.draft_data:
+            for field in self.CONTENT_FIELDS:
+                setattr(self, field, self.draft_data.get(field))
+        self.draft_data = None
+
+    def mark_published(self) -> None:
+        """Marca como publicada PRESERVANDO `published_at` de uma versao anterior.
+
+        Somente a PRIMEIRA publicacao define `published_at`; editar um artigo
+        ja publicado nao pode reordena-lo na listagem publica.
+        """
+        self.status = PUBLICATION_STATUS_PUBLISHED
+        if self.published_at is None:
+            self.published_at = utc_now()
+
+    def mark_unpublished(self) -> None:
+        """Remove do site preservando o historico de `published_at`."""
+        self.status = PUBLICATION_STATUS_DRAFT
+
+    def to_admin_list_dict(self) -> dict[str, object]:
+        """Payload leve da listagem admin (sem `content`/`draft_data`)."""
+        return {
+            "id": self.id,
+            "title": self.title,
+            "slug": self.slug,
+            "status": self.status,
+            "cover_image": self.cover_image,
+            "published_at": self.serialize_datetime(self.published_at),
+            "updated_at": self.serialize_datetime(self.updated_at),
+            "has_unpublished_changes": self.has_unpublished_changes,
+        }
+
+    def to_dict(self) -> dict[str, object]:
         return {
             "id": self.id,
             "title": self.title,
@@ -139,6 +221,9 @@ class Publication(db.Model):
             "published_at": self.serialize_datetime(self.published_at),
             "created_at": self.serialize_datetime(self.created_at),
             "updated_at": self.serialize_datetime(self.updated_at),
+            "draft_data": self.draft_data,
+            "editor_data": self.editor_data(),
+            "has_unpublished_changes": self.has_unpublished_changes,
         }
 
     def to_public_dict(self) -> dict[str, int | str | None]:
@@ -149,6 +234,20 @@ class Publication(db.Model):
             "summary": self.summary,
             "cover_image": self.cover_image,
             "published_at": self.serialize_datetime(self.published_at),
+        }
+
+    def to_public_detail_dict(self) -> dict[str, object]:
+        """Detalhe publico. NUNCA inclui `draft_data` (Ticket 11).
+
+        Mantem exatamente o contrato anterior — as chaves sao: as de
+        `to_public_dict()` mais `content`, `status`, `created_at`, `updated_at`.
+        """
+        return {
+            **self.to_public_dict(),
+            "content": self.content,
+            "status": self.status,
+            "created_at": self.serialize_datetime(self.created_at),
+            "updated_at": self.serialize_datetime(self.updated_at),
         }
 
     @staticmethod

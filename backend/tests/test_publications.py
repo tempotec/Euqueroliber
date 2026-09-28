@@ -168,6 +168,17 @@ class PublicationTestCase(unittest.TestCase):
         publication_id = self.create_publication(status=PUBLICATION_STATUS_DRAFT)
         self.login_admin()
 
+        response = self.client.post(f"/api/v1/admin/publications/{publication_id}/publish")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json()["status"], PUBLICATION_STATUS_PUBLISHED)
+        self.assertIsNotNone(response.get_json()["published_at"])
+
+    def test_put_cannot_change_status(self):
+        """Mudar status nao e edicao: o PUT deve recusar e apontar a acao explicita."""
+        publication_id = self.create_publication(status=PUBLICATION_STATUS_DRAFT)
+        self.login_admin()
+
         response = self.client.put(
             f"/api/v1/admin/publications/{publication_id}",
             json={
@@ -177,26 +188,35 @@ class PublicationTestCase(unittest.TestCase):
             },
         )
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get_json()["status"], PUBLICATION_STATUS_PUBLISHED)
-        self.assertIsNotNone(response.get_json()["published_at"])
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            response.get_json()["error"],
+            "status_change_requires_explicit_action",
+        )
 
-    def test_transition_published_to_draft_clears_timestamp(self):
+    def test_unpublish_removes_from_public_and_preserves_timestamp(self):
+        """Despublicar tira do site mas preserva o historico de `published_at`."""
         publication_id = self.create_publication(status=PUBLICATION_STATUS_PUBLISHED)
+
+        with self.app.app_context():
+            original_published_at = db.session.get(Publication, publication_id).published_at
+
         self.login_admin()
 
-        response = self.client.put(
-            f"/api/v1/admin/publications/{publication_id}",
-            json={
-                "title": "Educacao Ambiental na Rocinha",
-                "content": "Conteudo completo",
-                "status": PUBLICATION_STATUS_DRAFT,
-            },
-        )
+        response = self.client.post(f"/api/v1/admin/publications/{publication_id}/unpublish")
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()["status"], PUBLICATION_STATUS_DRAFT)
-        self.assertIsNone(response.get_json()["published_at"])
+        self.assertIsNotNone(response.get_json()["published_at"])
+
+        with self.app.app_context():
+            preserved = db.session.get(Publication, publication_id).published_at
+            self.assertEqual(preserved, original_published_at)
+
+        self.client.post("/api/v1/auth/logout")
+
+        public_response = self.client.get("/api/v1/publications")
+        self.assertEqual(public_response.get_json()["items"], [])
 
     def test_delete_publication(self):
         publication_id = self.create_publication()

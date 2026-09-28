@@ -17,6 +17,7 @@ import { AdminContentPreviewPage } from './pages/AdminContentPreviewPage'
 import { AdminDashboardPage } from './pages/AdminDashboardPage'
 import { AdminLoginPage } from './pages/AdminLoginPage'
 import { AdminPublicationFormPage } from './pages/AdminPublicationFormPage'
+import { AdminPublicationPreviewPage } from './pages/AdminPublicationPreviewPage'
 import { AdminPublicationsPage } from './pages/AdminPublicationsPage'
 import { PublicacaoDetailPage } from './pages/PublicacaoDetailPage'
 import { ParceirosPage } from './pages/ParceirosPage'
@@ -142,6 +143,14 @@ function AppRoutes() {
         element={(
           <ProtectedRoute>
             <AdminPublicationFormPage />
+          </ProtectedRoute>
+        )}
+      />
+      <Route
+        path="/admin/publicacoes/:id/preview"
+        element={(
+          <ProtectedRoute>
+            <AdminPublicationPreviewPage />
           </ProtectedRoute>
         )}
       />

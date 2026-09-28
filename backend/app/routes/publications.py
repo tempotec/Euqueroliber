@@ -31,4 +31,4 @@ def get_public_publication(slug: str):
     if publication is None:
         return not_found_response()
 
-    return jsonify(publication.to_dict())
+    return jsonify(publication.to_public_detail_dict())

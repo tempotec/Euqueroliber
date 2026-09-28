@@ -1,21 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ApiError, getPublicPublication, type Publication } from '../lib/api'
-import { PublicationCover } from '../components/ui/PublicationCover'
-
-function formatDate(iso: string | null | undefined): string {
-  if (!iso) return ''
-
-  try {
-    return new Date(iso).toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-    })
-  } catch {
-    return ''
-  }
-}
+import { PublicationArticle } from '../components/publications/PublicationArticle'
 
 type ViewState =
   | { status: 'loading' }
@@ -118,39 +104,7 @@ export function PublicacaoDetailPage() {
           </div>
         )}
 
-        {view.status === 'ready' && (
-          <article className="mt-10 overflow-hidden rounded-[2rem] border border-[var(--border)] bg-white/88 shadow-[0_24px_90px_rgba(8,47,73,0.08)]">
-            <PublicationCover
-              coverImage={view.publication.cover_image}
-              title={view.publication.title}
-              imageClassName="h-full w-full object-cover"
-              imageLoading="eager"
-              emptyFallback="none"
-            />
-
-            <div className="px-6 py-10 md:px-10">
-              {view.publication.published_at && (
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#D97706]">
-                  {formatDate(view.publication.published_at)}
-                </p>
-              )}
-
-              <h1 className="mt-4 text-balance text-3xl font-semibold leading-tight tracking-normal text-[#111827] md:text-4xl">
-                {view.publication.title}
-              </h1>
-
-              {view.publication.summary && (
-                <p className="mt-6 text-lg leading-relaxed text-[#374151]">
-                  {view.publication.summary}
-                </p>
-              )}
-
-              <div className="mt-8 whitespace-pre-line border-t border-[var(--border)] pt-8 text-base leading-relaxed text-[#374151]">
-                {view.publication.content}
-              </div>
-            </div>
-          </article>
-        )}
+        {view.status === 'ready' && <PublicationArticle publication={view.publication} />}
       </div>
     </section>
   )

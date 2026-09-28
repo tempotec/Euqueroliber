@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import {
   deletePublication,
   getAdminPublications,
-  type Publication,
+  type AdminPublicationListItem,
   type PublicationStatus,
 } from '../lib/api'
 
@@ -45,7 +45,7 @@ function StatusBadge({ status }: { status: PublicationStatus }) {
 export function AdminPublicationsPage() {
   const navigate = useNavigate()
   const location = useLocation()
-  const [items, setItems] = useState<Publication[]>([])
+  const [items, setItems] = useState<AdminPublicationListItem[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [deletingId, setDeletingId] = useState<number | null>(null)
@@ -78,9 +78,9 @@ export function AdminPublicationsPage() {
     return () => window.clearTimeout(timer)
   }, [notice])
 
-  async function handleDelete(publication: Publication) {
+  async function handleDelete(publication: AdminPublicationListItem) {
     const confirmed = window.confirm(
-      `Excluir a publicação "${publication.title}"? Esta ação não pode ser desfeita.`,
+      `Excluir a publicação "${publication.title}"?\n\nA exclusão é definitiva: não há lixeira nem como recuperar o conteúdo. Se quiser apenas tirá-la do site, use "Despublicar" na edição.`,
     )
 
     if (!confirmed) return
@@ -177,6 +177,14 @@ export function AdminPublicationsPage() {
                       </td>
                       <td className="px-6 py-5">
                         <StatusBadge status={publication.status} />
+                        {publication.has_unpublished_changes && (
+                          <span
+                            className="mt-2 inline-flex rounded-full bg-[#D97706]/15 px-3 py-1 text-[0.68rem] font-semibold text-[#B45309]"
+                            title="O site público ainda mostra a versão anterior até você publicar as alterações."
+                          >
+                            Alterações pendentes
+                          </span>
+                        )}
                       </td>
                       <td className="px-6 py-5 font-mono text-xs text-[var(--muted)]">
                         /{publication.slug}

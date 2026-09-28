@@ -135,6 +135,15 @@ export async function fetchProtectedAdminSession() {
 
 export type PublicationStatus = 'draft' | 'published'
 
+/** Campos editoriais — o que existe tanto na versão pública quanto no rascunho. */
+export type PublicationDraft = {
+  title: string
+  slug: string
+  summary: string
+  content: string
+  cover_image: string | null
+}
+
 export type Publication = {
   id: number
   title: string
@@ -146,6 +155,23 @@ export type Publication = {
   published_at: string | null
   created_at: string
   updated_at: string
+  /** Edição pendente de uma publicação já publicada. `null` = sem pendências. */
+  draft_data: PublicationDraft | null
+  /** O que o editor deve carregar: `draft_data` ?? versão pública. */
+  editor_data: PublicationDraft
+  has_unpublished_changes: boolean
+}
+
+/** Item da listagem admin — payload leve, sem `content`/`draft_data`. */
+export type AdminPublicationListItem = {
+  id: number
+  title: string
+  slug: string
+  status: PublicationStatus
+  cover_image: string | null
+  published_at: string | null
+  updated_at: string
+  has_unpublished_changes: boolean
 }
 
 export type PublicPublication = {
@@ -167,7 +193,7 @@ export type PublicationPayload = {
 }
 
 export async function getAdminPublications() {
-  return apiRequest<{ items: Publication[] }>('/api/v1/admin/publications', {
+  return apiRequest<{ items: AdminPublicationListItem[] }>('/api/v1/admin/publications', {
     method: 'GET',
   })
 }
@@ -186,9 +212,31 @@ export async function createPublication(data: PublicationPayload) {
 }
 
 export async function updatePublication(id: number | string, data: PublicationPayload) {
+  // Salva a EDIÇÃO. Nunca altera a versão pública de uma publicação publicada.
   return apiRequest<Publication>(`/api/v1/admin/publications/${id}`, {
     method: 'PUT',
     body: data,
+  })
+}
+
+/** Aplica a edição pendente na versão pública. */
+export async function publishPublication(id: number | string) {
+  return apiRequest<Publication>(`/api/v1/admin/publications/${id}/publish`, {
+    method: 'POST',
+  })
+}
+
+/** Remove do site preservando o histórico de `published_at`. */
+export async function unpublishPublication(id: number | string) {
+  return apiRequest<Publication>(`/api/v1/admin/publications/${id}/unpublish`, {
+    method: 'POST',
+  })
+}
+
+/** Descarta a edição pendente. A versão pública não é afetada. */
+export async function revertPublicationDraft(id: number | string) {
+  return apiRequest<Publication>(`/api/v1/admin/publications/${id}/revert`, {
+    method: 'POST',
   })
 }
 
